@@ -58,8 +58,7 @@ class PdoTest extends FeatureTestCase
         for ($i = 0; $i < 50; $i++) {
             $requests[] = new TestRequest("/pdo/$driver", 'POST');
             $requests[$i]->jsonBody([
-                'name' => "User $i",
-                'email' => "test$i@test.test"
+                'name' => "Test $i",
             ]);
         }
 
@@ -68,9 +67,8 @@ class PdoTest extends FeatureTestCase
 
             $this->assertJsonResponse([
                 'success' => true,
-                'user' => [
+                'test' => [
                     'name' => $request->getInJsonBody('name'),
-                    'email' => $request->getInJsonBody('email'),
                 ],
             ], $response);
         });

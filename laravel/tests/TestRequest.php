@@ -9,6 +9,7 @@ class TestRequest
 {
 
     public string $body = "";
+    public array $multipart = [];
     public array $headers = [];
 
     public function __construct(public $url, public $method = "GET")
@@ -50,6 +51,16 @@ class TestRequest
         return json_decode($this->body, true);
     }
 
+    public function withFile(string $file): static
+    {
+        $this->multipart[] = [
+            'name' => 'file',
+            'filename' => basename($file),
+            'contents' => fopen($file, 'r')
+        ];
+        return $this;
+    }
+
     public function getInJsonBody(string $key)
     {
         return $this->getJsonBody()[$key] ?? null;
@@ -66,10 +77,16 @@ class TestRequest
             ]);
         }
 
-        return $client->postAsync($this->url, [
+        $options = [
             'body' => $this->body,
             'headers' => $headers
-        ]);
+        ];
+
+        if (!empty($this->multipart)) {
+            $options['multipart'] = $this->multipart;
+        }
+
+        return $client->postAsync($this->url, $options);
     }
 
 }

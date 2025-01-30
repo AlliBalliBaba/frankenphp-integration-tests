@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Extensions;
 
+use App\Models\Test;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,7 +14,7 @@ class Pdo
     {
         config()->set('database.default', $this->getDriver($request));
 
-        User::query()->delete();
+        Test::query()->delete();
 
         return ['success' => true,];
     }
@@ -22,17 +23,14 @@ class Pdo
     {
         config()->set('database.default', $this->getDriver($request));
 
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = bcrypt('password');
-        $user->save();
+        $test = new Test();
+        $test->name = $request->name;
+        $test->save();
 
         return [
             'success' => true,
-            'user' => [
-                'name' => $user->name,
-                'email' => $user->email,
+            'test' => [
+                'name' => $test->name,
             ],
         ];
     }

@@ -13,6 +13,7 @@ use App\Http\Controllers\Laravel\FileCacheController;
 use App\Http\Controllers\Laravel\HelloWorldController;
 use App\Http\Controllers\Laravel\TemplateController;
 use App\Http\Controllers\Laravel\ThrowController;
+use App\Http\Controllers\Laravel\UploadController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HelloWorldController::class, 'hello']);
@@ -28,6 +29,9 @@ Route::get('/abort', [ThrowController::class, 'abort']);
 
 Route::post('/filecache', [FileCacheController::class, 'cache']);
 Route::post('/filecache/flush', [FileCacheController::class, 'flush']);
+
+Route::post('/upload', [UploadController::class, 'upload']);
+Route::post('/upload/flush', [UploadController::class, 'flush']);
 
 
 # Extensions
