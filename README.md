@@ -52,10 +52,10 @@ To view the caddy output while testing, you can instead call `frankenphp run`:
 
 ```bash
 docker compose up -d
-docker compose exec frankenphp frankenphp start -c /app/Caddyfile
+docker compose exec frankenphp frankenphp run -c /app/Caddyfile
 ```
 
-And the run the tests from a separate shell while watching the output:
+And then run the tests from a separate terminal while watching the output:
 
 ```bash
 docker compose exec frankenphp vendor/bin/paratest -p 4 -v
