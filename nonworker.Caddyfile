@@ -1,7 +1,10 @@
 {
 	# Non-worker Caddyfile for FrankenPHP and Laravel
 
-	frankenphp
+	frankenphp {
+		num_threads 10
+		max_threads auto
+	}
 }
 
 :80 {

@@ -2,11 +2,12 @@
 	# worker mode Caddyfile
 
 	frankenphp {
-	    max_threads {$MAX_THREADS:20}
+	    max_threads auto
+	    num_threads 11
 		worker {
 		    file "/app/public/frankenphp-worker.php"
-		    num {$WORKER_NUMBER:20}
-		    {$WATCH:watch}
+		    num 10
+		    watch
 		}
 		php_ini mysqlnd.collect_statistics Off
 	}
