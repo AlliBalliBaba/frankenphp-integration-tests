@@ -2,12 +2,12 @@
 	# worker mode Caddyfile
 
 	frankenphp {
-	    max_threads auto
-	    num_threads 11
+		max_threads auto
+		num_threads 11
 		worker {
-		    file "/app/public/frankenphp-worker.php"
-		    num 10
-		    watch
+			file "/app/public/frankenphp-worker.php"
+			num 10
+			watch
 		}
 		php_ini mysqlnd.collect_statistics Off
 	}
@@ -17,18 +17,18 @@
 	route {
 		encode zstd br gzip
 
-        @assets {
-            path /assets/*
-        }
+		@assets {
+			path /assets/*
+		}
 
 		file_server @assets {
-            root /app/public
-        }
+			root /app/public
+		}
 
-        # everything that is not in /assets is handled by your index or worker PHP file
-        rewrite frankenphp-worker.php
-        php {
-            root /app/public
-        }
+		# everything that is not in /assets is handled by your index or worker PHP file
+		rewrite frankenphp-worker.php
+		php {
+			root /app/public
+		}
 	}
 }
