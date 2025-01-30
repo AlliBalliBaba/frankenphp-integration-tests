@@ -2,29 +2,23 @@
 
 namespace App\Http\Controllers\Laravel;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class UploadController
 {
 
-
-    public function flush()
+    public function flush(): array
     {
-        $files = glob(storage_path('*'));
-        foreach ($files as $file) {
-            if (is_file($file)) {
-                unlink($file);
-            }
-        }
+        Storage::deleteDirectory('uploads');
 
         return ['success' => true];
     }
 
-
-    public function upload()
+    public function upload(): array
     {
         $uploadedFile = request()->file('file');
-        $uploadedFile->storeAs(storage_path(), Str::random());
+        $uploadedFile->storeAs('uploads', Str::random());
 
         return ['success' => true];
     }
