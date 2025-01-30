@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Extensions;
 class OpCache
 {
 
-    public function opcache_flush(): array
+    public function flush(): array
     {
-        $this->opcache_flush();
+        opcache_reset();
         return ['success' => true];
     }
 
