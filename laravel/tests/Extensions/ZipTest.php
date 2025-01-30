@@ -10,7 +10,7 @@ class ZipTest extends FeatureTestCase
 {
 
     #[Test]
-    public function redis_cache_and_fetch()
+    public function zip_100_files()
     {
         // flush the cache
         $this->fetch(new TestRequest("/zip/flush", "POST"), function (Response $response) {

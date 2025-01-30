@@ -35,3 +35,13 @@ Most tests will make ~100 requests in parallel
 
 You can edit the `Caddyfile` in the root of the repo or add additonal Caddyfiles to test
 different configurations.
+
+## Running single tests
+
+To run single tests, you can start the server manually and adjust the `--filter`:
+
+```bash
+docker compose up -d
+docker compose exec frankenphp frankenphp start -c /app/Caddyfile
+docker compose exec frankenphp php artisan test --filter=OpenSSL
+```

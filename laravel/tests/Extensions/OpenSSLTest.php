@@ -13,7 +13,7 @@ class OpenSSLTest extends FeatureTestCase
     public function encrypt_aes_256_cbc()
     {
         # create an initialization vector
-        $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
+        $iv = openssl_random_pseudo_bytes(16);
 
         $requests = [];
         for ($i = 0; $i < 100; $i++) {
