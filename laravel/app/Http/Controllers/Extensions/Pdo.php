@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-abstract class PdoController
+abstract class Pdo
 {
 
     abstract protected function driver(): string;

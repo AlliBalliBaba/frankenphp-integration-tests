@@ -2,16 +2,16 @@
 
 namespace Tests\Feature\Extensions;
 
-use App\Http\Controllers\Extensions\Apcu;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\Feature\FeatureTestCase;
 use Tests\Feature\TestRequest;
 
 class ApcuTest extends FeatureTestCase
 {
 
-    public function test_caching_with_apcu()
+    #[Test]
+    public function apcu_cache_and_fetch()
     {
         // flush the cache
         $this->fetch(new TestRequest("/apcu/flush", "POST"), function (Response $response) {

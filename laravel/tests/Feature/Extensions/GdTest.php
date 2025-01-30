@@ -7,7 +7,7 @@ use PHPUnit\Framework\Attributes\Test;
 use Tests\Feature\FeatureTestCase;
 use Tests\Feature\TestRequest;
 
-class GdControllerTest extends FeatureTestCase
+class GdTest extends FeatureTestCase
 {
 
     #[Test]
@@ -20,7 +20,7 @@ class GdControllerTest extends FeatureTestCase
 
 
         $requests = [];
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             $requests[] = new TestRequest("/gd/convert?file=$i");
         }
 

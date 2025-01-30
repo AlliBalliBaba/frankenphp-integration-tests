@@ -2,16 +2,16 @@
 
 namespace Extensions;
 
-use App\Http\Controllers\Extensions\Apcu;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\Feature\FeatureTestCase;
 use Tests\Feature\TestRequest;
 
 class RedisTest extends FeatureTestCase
 {
 
-    public function test_caching_with_apcu()
+    #[Test]
+    public function redis_cache_and_fetch()
     {
         // flush the cache
         $this->fetch(new TestRequest("/redis/flush", "POST"), function (Response $response) {

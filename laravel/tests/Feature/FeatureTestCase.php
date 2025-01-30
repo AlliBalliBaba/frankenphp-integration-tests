@@ -2,10 +2,7 @@
 
 namespace Tests\Feature;
 
-// use Illuminate\Foundation\Testing\RefreshDatabase;
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit\Util\Test;
 use Tests\TestCase;
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise;
@@ -29,7 +26,10 @@ class FeatureTestCase extends TestCase
      */
     protected function fetchParallel(array $requests, callable $assertion): void
     {
-        $client = new Client(['base_uri' => self::HOST]);
+        $client = new Client([
+            'base_uri' => self::HOST,
+            'http_errors' => false,
+        ]);
 
         $promises = [];
         foreach ($requests as $request) {
@@ -50,7 +50,12 @@ class FeatureTestCase extends TestCase
 
     protected function assertOk(Response $response): void
     {
-        self::assertSame(200, $response->getStatusCode());
+        $this->assertStatusCode($response, 200);
+    }
+
+    protected function assertStatusCode(Response $response, int $expected): void
+    {
+        self::assertSame($expected, $response->getStatusCode());
     }
 
     protected function assertJsonResponse(array $expected, Response $response): void

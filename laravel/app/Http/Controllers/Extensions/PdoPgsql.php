@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Extensions;
 
-class PdoSqliteController extends PdoController
+class PdoPgsql extends Pdo
 {
     protected function driver(): string
     {
-        return 'sqlite';
+        return 'pgsql';
     }
 }

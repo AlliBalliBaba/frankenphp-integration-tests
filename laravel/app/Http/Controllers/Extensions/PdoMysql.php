@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Extensions;
 
-class PdoPgsqlController extends PdoController
+class PdoMysql extends Pdo
 {
     protected function driver(): string
     {
-        return 'pgsql';
+        return 'mysql';
     }
 }

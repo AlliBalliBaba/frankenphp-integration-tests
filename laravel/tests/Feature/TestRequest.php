@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise\PromiseInterface;
-use GuzzleHttp\Psr7\Request;
 
 class TestRequest
 {

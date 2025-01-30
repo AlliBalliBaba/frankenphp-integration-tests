@@ -36,4 +36,12 @@ class HelloWorldController
         ];
     }
 
+    public function sleep(Request $request): array
+    {
+        $ms = (int)$request->query('ms');
+        usleep($ms * 1000);
+
+        return ['ms' => $ms];
+    }
+
 }

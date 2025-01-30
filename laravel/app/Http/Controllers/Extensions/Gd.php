@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Extensions;
 
 use Illuminate\Http\Request;
 
-class GdController
+class Gd
 {
 
     public function flushConvertedImages(): array

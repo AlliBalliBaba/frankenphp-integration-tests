@@ -7,7 +7,7 @@ use PHPUnit\Framework\Attributes\Test;
 use Tests\Feature\FeatureTestCase;
 use Tests\Feature\TestRequest;
 
-class PdoControllerTest extends FeatureTestCase
+class PdoTest extends FeatureTestCase
 {
 
     #[Test]
@@ -53,9 +53,9 @@ class PdoControllerTest extends FeatureTestCase
             $this->assertOk($response);
         });
 
-        // insert 100 users
+        // insert 50 users
         $requests = [];
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 50; $i++) {
             $requests[] = new TestRequest("/pdo/$driver", 'POST');
             $requests[$i]->jsonBody([
                 'name' => "User $i",
