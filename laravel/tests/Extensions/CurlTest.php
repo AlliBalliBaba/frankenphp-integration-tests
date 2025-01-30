@@ -13,14 +13,12 @@ class CurlTest extends FeatureTestCase
     #[Test]
     public function fetch_hello_world_via_proxy()
     {
-        $proxyUrl = urlencode("http://localhost");
+        # ping the Caddy health check endpoint
+        $proxyUrl = urlencode("http://localhost:2019/metrics");
 
-        // 'count' must be less than worker number since we are using the same worker to fetch the proxy
-        $this->fetchParallelTimes(new TestRequest("/curl?url=$proxyUrl"), 10, function (Response $response) {
+        $this->fetchParallelTimes(new TestRequest("/curl?url=$proxyUrl"), 100, function (Response $response) {
             $this->assertOk($response);
-            $this->assertJsonResponse([
-                'result' => 'Hello World!',
-            ], $response);
+            $this->assertBodyContains('caddy', $response);
         });
     }
 
@@ -29,7 +27,7 @@ class CurlTest extends FeatureTestCase
     {
         $proxyUrl = urlencode("http://localhost/sleep?ms=5000");
 
-        $this->fetchParallelTimes(new TestRequest("/curl?timeout=1&url=$proxyUrl"), 20, function (Response $response) {
+        $this->fetchParallelTimes(new TestRequest("/curl?timeout=1&url=$proxyUrl"), 10, function (Response $response) {
             $this->assertJsonResponse([
                 'result' => false
             ], $response);

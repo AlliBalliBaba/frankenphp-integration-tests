@@ -16,8 +16,8 @@ docker compose exec frankenphp php artisan migrate:fresh --database=pgsql
 # start the server
 docker compose exec frankenphp frankenphp start -c /app/Caddyfile
 
-# run the tests (4 Processes)
-docker compose exec frankenphp vendor/bin/paratest -p 4 -v
+# run the tests (5 Processes)
+docker compose exec frankenphp vendor/bin/paratest -p 5 -v
 
 # shut down
 docker compose stop

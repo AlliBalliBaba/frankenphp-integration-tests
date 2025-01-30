@@ -10,7 +10,6 @@ class RestartTest extends TestCase
 {
 
     #[Test]
-    // TODO: This breaks worker mode
     public function restart_workers()
     {
         $response = Http::post('http://localhost:2019/frankenphp/workers/restart');
