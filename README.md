@@ -1,4 +1,4 @@
-# Franken PHP Laravel Sandbox
+# FrankenPHP Integration Tests
 
 This repo serves as a sandbox for automated testing of Laravel + FrankenPHP with various extensions
 
