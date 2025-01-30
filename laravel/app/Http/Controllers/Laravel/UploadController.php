@@ -17,10 +17,11 @@ class UploadController
 
     public function upload(): array
     {
+        $filename = Str::random() . '.txt';
         $uploadedFile = request()->file('file');
-        $uploadedFile->storeAs('uploads', Str::random());
+        $uploadedFile->storeAs('uploads', $filename);
 
-        return ['success' => true];
+        return ['success' => Storage::exists("uploads/$filename")];
     }
 
 }
