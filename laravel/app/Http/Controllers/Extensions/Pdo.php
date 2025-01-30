@@ -6,15 +6,12 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-abstract class Pdo
+class Pdo
 {
 
-    abstract protected function driver(): string;
-
-
-    public function flush(): array
+    public function flush(Request $request): array
     {
-        config()->set('database.default', $this->driver());
+        config()->set('database.default', $this->getDriver($request));
 
         User::query()->delete();
 
@@ -23,7 +20,7 @@ abstract class Pdo
 
     public function insert(Request $request): array
     {
-        config()->set('database.default', $this->driver());
+        config()->set('database.default', $this->getDriver($request));
 
         $user = new User();
         $user->name = $request->name;
@@ -40,9 +37,9 @@ abstract class Pdo
         ];
     }
 
-    public function transaction(): array
+    public function transaction(Request $request): array
     {
-        config()->set('database.default', $this->driver());
+        config()->set('database.default', $this->getDriver($request));
 
         DB::beginTransaction();
         $user = User::factory()->create();
@@ -54,6 +51,11 @@ abstract class Pdo
         return [
             'success' => $existsInTransaction && $doesNotExistAfterRollback
         ];
+    }
+
+    private function getDriver(Request $request): string
+    {
+        return $request->route('driver');
     }
 
 }

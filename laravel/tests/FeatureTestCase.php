@@ -38,7 +38,7 @@ class FeatureTestCase extends TestCase
         $responses = Promise\Utils::unwrap($promises);
 
         foreach ($responses as $index => $response) {
-            $assertion($response, $requests[$index]);
+            $assertion($response, $requests[$index], $index);
         }
     }
 
@@ -84,6 +84,12 @@ class FeatureTestCase extends TestCase
                 self::fail("Expected key $key with value $sanitizedValue but got\n\n$body");
             }
         }
+    }
+
+    protected function extractCookie(Response $response): string
+    {
+        $cookies = $response->getHeader('Set-Cookie');
+        return implode('; ', $cookies);
     }
 
 

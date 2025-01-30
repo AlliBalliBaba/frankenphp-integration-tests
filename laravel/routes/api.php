@@ -6,9 +6,7 @@ use App\Http\Controllers\Extensions\Gd;
 use App\Http\Controllers\Extensions\Gmp;
 use App\Http\Controllers\Extensions\Intl;
 use App\Http\Controllers\Extensions\OpCache;
-use App\Http\Controllers\Extensions\PdoMysql;
-use App\Http\Controllers\Extensions\PdoPgsql;
-use App\Http\Controllers\Extensions\PdoSqlite;
+use App\Http\Controllers\Extensions\Pdo;
 use App\Http\Controllers\Extensions\Redis;
 use App\Http\Controllers\Extensions\Xml;
 use App\Http\Controllers\Laravel\FileCacheController;
@@ -62,14 +60,6 @@ Route::get('/gmp', [Gmp::class, 'convert']);
 Route::post('/xml', [Xml::class, 'convert']);
 
 # PDO
-Route::post('/pdo/mysql', [PdoMysql::class, 'insert']);
-Route::post('/pdo/mysql/flush', [PdoMysql::class, 'flush']);
-Route::get('/pdo/mysql/transaction', [PdoMysql::class, 'transaction']);
-
-Route::post('/pdo/pgsql', [PdoPgsql::class, 'insert']);
-Route::post('/pdo/pgsql/flush', [PdoPgsql::class, 'flush']);
-Route::get('/pdo/pgsql/transaction', [PdoMysql::class, 'transaction']);
-
-Route::post('/pdo/sqlite', [PdoSqlite::class, 'insert']);
-Route::post('/pdo/sqlite/flush', [PdoSqlite::class, 'flush']);
-Route::get('/pdo/sqlite/transaction', [PdoMysql::class, 'transaction']);
+Route::post('/pdo/{driver}', [Pdo::class, 'insert']);
+Route::post('/pdo/{driver}/flush', [Pdo::class, 'flush']);
+Route::get('/pdo/{driver}/transaction', [Pdo::class, 'transaction']);

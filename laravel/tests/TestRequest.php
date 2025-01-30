@@ -32,6 +32,11 @@ class TestRequest
         return $this;
     }
 
+    public function withCookie(string $value): static
+    {
+        return $this->header('Cookie', $value);
+    }
+
     public function getQuery(string $key): string
     {
         $url = parse_url($this->url);
