@@ -1,6 +1,7 @@
 # FrankenPHP Integration Tests
 
-This repo serves as a sandbox for automated testing of Laravel + FrankenPHP with various extensions
+This repo serves as a small sandbox for automated testing of FrankenPHP + Laravel with various extensions.
+It's main purpose is to make new FrankenPHP branches more resilient against bugs.
 
 ## Setup
 
