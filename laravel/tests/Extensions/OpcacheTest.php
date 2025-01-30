@@ -11,7 +11,7 @@ class OpcacheTest extends FeatureTestCase
 {
 
     #[Test]
-    public function show_first_day_of_the_week()
+    public function flush_opcache()
     {
         $this->fetchParallelTimes(new TestRequest("/opcache/flush"), 10, function (Response $response) {
             $this->assertOk($response);

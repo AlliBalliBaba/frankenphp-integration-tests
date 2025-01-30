@@ -1,9 +1,5 @@
 {
-	admin localhost:2019
-
-	# disable https since we are always running in docker
-	skip_install_trust
-	auto_https off
+	# Non-worker Caddyfile for FrankenPHP and Laravel
 
 	frankenphp
 }

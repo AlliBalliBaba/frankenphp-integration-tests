@@ -1,0 +1,26 @@
+#!/bin/bash
+# install FrankenPHP from source
+
+read -p "Enter the frankenphp branch to build from [main]: " branch
+branch=${branch:-main}
+
+read -p "Enter the PHP base image [php:8.4-zts-bookworm]: " phpimage
+phpimage=${phpimage:-php:8.4-zts-bookworm}
+
+read -p "Enter the golang base image [golang:1.23]: " goimage
+goimage=${goimage:-golang:1.23}
+
+# delete the old frankenphp folder
+rm -rf frankenphp
+
+# clone the FrankenPHP branch to install from
+git clone -b "$branch" https://github.com/dunglas/frankenphp.git
+
+cd frankenphp && docker build -t frankenphp-custom --build-context "php-base=docker-image://$phpimage" --build-context "golang-base=docker-image://$goimage" .
+cd ..
+
+# build and install
+docker build -t frankenphp-custom-with-extensions -f frankenphp.Dockerfile .
+docker compose up -d
+docker compose exec frankenphp composer update
+docker compose exec frankenphp php artisan octane:install --server=frankenphp

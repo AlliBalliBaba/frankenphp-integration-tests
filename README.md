@@ -4,9 +4,24 @@ This repo serves as a sandbox for automated testing of Laravel + FrankenPHP with
 
 ## Setup
 
-To run the tests you need Docker and Docker Compose installed on your machine.
-Just run the following command in the root of the project:
+To run the tests you need `git`, `docker` and `docker compose`.
+The FrankenPHP image will be installed from a git branch of your choosing.
+
+To setup the local `frankenphp-custom-with-extensions` image:
+
+```bash
+sh setup
+```
+
+To add additional extensions, you can modify the `frankenphp.Dockerfile` and run setup again.
+
+## Test
+
+To run tests:
 
 ```bash
 sh test
 ```
+
+This will start the custom FrankenPHP image, PostgreSQL, MySQL, Redis and run the tests
+in the Laravel repo.

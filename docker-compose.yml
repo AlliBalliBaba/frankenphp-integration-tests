@@ -5,9 +5,7 @@ volumes:
 
 services:
   frankenphp:
-    build:
-      context: .
-      dockerfile: frankenphp.Dockerfile
+    image: frankenphp-custom-with-extensions
     volumes:
       - ./laravel:/app
     working_dir: /app

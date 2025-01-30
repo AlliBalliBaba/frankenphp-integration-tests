@@ -9,6 +9,7 @@ use App\Http\Controllers\Extensions\OpCache;
 use App\Http\Controllers\Extensions\Pdo;
 use App\Http\Controllers\Extensions\Redis;
 use App\Http\Controllers\Extensions\Xml;
+use App\Http\Controllers\Extensions\Zip;
 use App\Http\Controllers\Laravel\FileCacheController;
 use App\Http\Controllers\Laravel\HelloWorldController;
 use App\Http\Controllers\Laravel\TemplateController;
@@ -47,6 +48,10 @@ Route::post('/apcu/flush', [Apcu::class, 'flush']);
 # REDIS
 Route::post('/redis', [Redis::class, 'cache']);
 Route::post('/redis/flush', [Redis::class, 'flush']);
+
+# ZIP
+Route::post('/zip', [Zip::class, 'zip']);
+Route::post('/zip/flush', [Zip::class, 'flush']);
 
 # INTL
 Route::get('/intl', [Intl::class, 'calendar']);
