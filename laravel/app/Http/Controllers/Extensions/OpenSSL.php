@@ -18,4 +18,11 @@ class OpenSSL
         ];
     }
 
+    public function bcrypt(Request $request): array
+    {
+        $data = $request->query('data');
+
+        return ['data' => bcrypt($data)];
+    }
+
 }

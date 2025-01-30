@@ -72,6 +72,7 @@ Route::post('/xml', [Xml::class, 'convert']);
 
 # OPENSSL
 Route::get('/openssl', [OpenSSL::class, 'encrypt']);
+Route::get('/bcrypt', [OpenSSL::class, 'bcrypt']);
 
 # PDO
 Route::post('/pdo/{driver}', [Pdo::class, 'insert']);
