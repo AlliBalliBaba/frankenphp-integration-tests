@@ -27,6 +27,7 @@ Route::get('/sleep', [HelloWorldController::class, 'sleep']);
 Route::get('/table', [TemplateController::class, 'table']);
 
 Route::get('/throw', [ThrowController::class, 'throw']);
+Route::get('/dd', [ThrowController::class, 'dd']);
 Route::get('/abort', [ThrowController::class, 'abort']);
 
 Route::post('/filecache', [FileCacheController::class, 'cache']);

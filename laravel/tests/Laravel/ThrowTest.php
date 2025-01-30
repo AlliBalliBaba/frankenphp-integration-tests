@@ -21,6 +21,17 @@ class ThrowTest extends FeatureTestCase
     }
 
     #[Test]
+    public function spam_dd()
+    {
+        $request = new TestRequest('/dd');
+
+        $this->fetchParallelTimes($request, 100, function (Response $response) {
+            $this->assertStatusCode($response, 500);
+        });
+    }
+
+
+    #[Test]
     public function spam_status_codes()
     {
         $requests = [];

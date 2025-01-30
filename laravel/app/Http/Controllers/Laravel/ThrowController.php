@@ -12,6 +12,11 @@ class ThrowController
         throw new \Exception('Hello World!');
     }
 
+    public function dd()
+    {
+        dd('Hello World!');
+    }
+
     public function abort(Request $request)
     {
         abort($request->query('code'), 'Hello World!');
