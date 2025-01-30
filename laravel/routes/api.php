@@ -11,6 +11,7 @@ use App\Http\Controllers\Extensions\PdoPgsql;
 use App\Http\Controllers\Extensions\PdoSqlite;
 use App\Http\Controllers\Extensions\Redis;
 use App\Http\Controllers\Extensions\Xml;
+use App\Http\Controllers\Laravel\FileCacheController;
 use App\Http\Controllers\Laravel\HelloWorldController;
 use App\Http\Controllers\Laravel\TemplateController;
 use App\Http\Controllers\Laravel\ThrowController;
@@ -26,6 +27,10 @@ Route::get('/table', [TemplateController::class, 'table']);
 
 Route::get('/throw', [ThrowController::class, 'throw']);
 Route::get('/abort', [ThrowController::class, 'abort']);
+
+Route::post('/filecache', [FileCacheController::class, 'cache']);
+Route::post('/filecache/flush', [FileCacheController::class, 'flush']);
+
 
 # Extensions
 
