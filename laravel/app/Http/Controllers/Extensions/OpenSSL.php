@@ -11,7 +11,7 @@ class OpenSSL
     {
         $passPhrase = $request->query('passphrase');
         $data = $request->query('data');
-        $iv = $request->query('iv');
+        $iv = base64_decode($request->query('iv'));
 
         return [
             'data' => openssl_encrypt($data, 'aes-256-cbc', $passPhrase, 0, $iv),

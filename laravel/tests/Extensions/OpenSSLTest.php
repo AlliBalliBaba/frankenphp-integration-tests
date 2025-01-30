@@ -17,7 +17,7 @@ class OpenSSLTest extends FeatureTestCase
 
         $requests = [];
         for ($i = 0; $i < 100; $i++) {
-            $encIv = urlencode($iv);
+            $encIv = urlencode(base64_encode($iv));
             $url = "/openssl?passphrase=pass$i&data=data$i&iv=$encIv";
             $requests[] = new TestRequest($url);
         }

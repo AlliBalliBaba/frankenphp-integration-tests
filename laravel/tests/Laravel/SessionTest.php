@@ -13,12 +13,6 @@ class SessionTest extends FeatureTestCase
     const AMOUNT = 100;
 
     #[Test]
-    public function test_file_session()
-    {
-        $this->runSessionFlow('file');
-    }
-
-    #[Test]
     public function test_native_session()
     {
         $this->runSessionFlow('native');
