@@ -1,11 +1,11 @@
 <?php
 
-namespace Extensions;
+namespace Tests\Extensions;
 
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\Test;
-use Tests\Feature\FeatureTestCase;
-use Tests\Feature\TestRequest;
+use Tests\FeatureTestCase;
+use Tests\TestRequest;
 
 class CurlTest extends FeatureTestCase
 {

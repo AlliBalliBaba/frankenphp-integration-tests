@@ -1,11 +1,10 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests;
 
-use GuzzleHttp\Psr7\Response;
-use Tests\TestCase;
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise;
+use GuzzleHttp\Psr7\Response;
 
 class FeatureTestCase extends TestCase
 {
@@ -55,6 +54,12 @@ class FeatureTestCase extends TestCase
 
     protected function assertStatusCode(Response $response, int $expected): void
     {
+        $statusCode = $response->getStatusCode();
+        if ($statusCode === 500 && $expected !== 500) {
+            $message = (string)$response->getBody();
+            $this->fail("Expected status code $expected but got 500:\n\n$message");
+        }
+
         self::assertSame($expected, $response->getStatusCode());
     }
 
@@ -63,13 +68,21 @@ class FeatureTestCase extends TestCase
         self::assertSame($expected, json_decode((string)$response->getBody(), true));
     }
 
+    protected function assertBodyContains(string $expected, Response $response): void
+    {
+        self::assertStringContainsString($expected, (string)$response->getBody());
+    }
+
     protected function assertJsonKeysInResponse(array $expected, Response $response): void
     {
-        $responseJson = json_decode((string)$response->getBody(), true);
+        $body = (string)$response->getBody();
+        $responseJson = json_decode($body, true);
 
         foreach ($expected as $key => $value) {
-            $this->assertArrayHasKey($key, $responseJson);
-            $this->assertSame($value, $responseJson[$key]);
+            if ($value !== ($responseJson[$key] ?? null)) {
+                $sanitizedValue = json_encode($value);
+                self::fail("Expected key $key with value $sanitizedValue but got\n\n$body");
+            }
         }
     }
 

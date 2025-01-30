@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\HelloWorld;
+namespace App\Http\Controllers\Laravel;
 
 use Illuminate\Http\Request;
 

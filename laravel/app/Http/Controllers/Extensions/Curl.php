@@ -12,7 +12,6 @@ class Curl
     {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $request->query('url'));
-        curl_setopt($curl, CURLOPT_TIMEOUT, 4);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         if ($timeout = $request->query('timeout')) {
             curl_setopt($curl, CURLOPT_TIMEOUT, (int)$timeout);

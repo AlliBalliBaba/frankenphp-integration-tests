@@ -1,27 +1,27 @@
 <?php
 
-namespace Tests\Feature\Extensions;
+namespace Tests\Extensions;
 
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\Test;
-use Tests\Feature\FeatureTestCase;
-use Tests\Feature\TestRequest;
+use Tests\FeatureTestCase;
+use Tests\TestRequest;
 
-class ApcuTest extends FeatureTestCase
+class RedisTest extends FeatureTestCase
 {
 
     #[Test]
-    public function apcu_cache_and_fetch()
+    public function redis_cache_and_fetch()
     {
         // flush the cache
-        $this->fetch(new TestRequest("/apcu/flush", "POST"), function (Response $response) {
+        $this->fetch(new TestRequest("/redis/flush", "POST"), function (Response $response) {
             $this->assertOk($response);
         });
 
         // test the cache
         $requests = [];
         for ($i = 0; $i < 100; $i++) {
-            $requests[] = new TestRequest("/apcu", "POST");
+            $requests[] = new TestRequest("/redis", "POST");
             $requests[$i]->jsonBody([
                 'key' => "key$i",
                 'value' => "value$i",

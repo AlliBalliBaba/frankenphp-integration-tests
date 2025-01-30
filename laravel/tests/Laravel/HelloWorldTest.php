@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Feature\HelloWorld;
+namespace Tests\Laravel;
 
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\Test;
-use Tests\Feature\FeatureTestCase;
-use Tests\Feature\TestRequest;
+use Tests\FeatureTestCase;
+use Tests\TestRequest;
 
 class HelloWorldTest extends FeatureTestCase
 {

@@ -3,14 +3,17 @@
 use App\Http\Controllers\Extensions\Apcu;
 use App\Http\Controllers\Extensions\Curl;
 use App\Http\Controllers\Extensions\Gd;
+use App\Http\Controllers\Extensions\Gmp;
 use App\Http\Controllers\Extensions\Intl;
 use App\Http\Controllers\Extensions\OpCache;
 use App\Http\Controllers\Extensions\PdoMysql;
 use App\Http\Controllers\Extensions\PdoPgsql;
 use App\Http\Controllers\Extensions\PdoSqlite;
 use App\Http\Controllers\Extensions\Redis;
-use App\Http\Controllers\HelloWorld\HelloWorldController;
-use App\Http\Controllers\HelloWorld\ThrowController;
+use App\Http\Controllers\Extensions\Xml;
+use App\Http\Controllers\Laravel\HelloWorldController;
+use App\Http\Controllers\Laravel\TemplateController;
+use App\Http\Controllers\Laravel\ThrowController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HelloWorldController::class, 'hello']);
@@ -19,6 +22,7 @@ Route::post('/post', [HelloWorldController::class, 'post']);
 Route::get('/server', [HelloWorldController::class, 'server']);
 Route::get('/headers', [HelloWorldController::class, 'headers']);
 Route::get('/sleep', [HelloWorldController::class, 'sleep']);
+Route::get('/table', [TemplateController::class, 'table']);
 
 Route::get('/throw', [ThrowController::class, 'throw']);
 Route::get('/abort', [ThrowController::class, 'abort']);
@@ -45,6 +49,12 @@ Route::get('/curl', [Curl::class, 'fetch']);
 
 # OPCACHE
 Route::get('/opcache/flush', [OpCache::class, 'flush']);
+
+# GMP
+Route::get('/gmp', [Gmp::class, 'convert']);
+
+# XML
+Route::post('/xml', [Xml::class, 'convert']);
 
 # PDO
 Route::post('/pdo/mysql', [PdoMysql::class, 'insert']);

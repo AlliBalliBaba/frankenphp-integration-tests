@@ -5,11 +5,11 @@
          colors="true"
 >
     <testsuites>
-        <testsuite name="Unit">
-            <directory>tests/Unit</directory>
+        <testsuite name="Laravel">
+            <directory>tests/Laravel</directory>
         </testsuite>
-        <testsuite name="Feature">
-            <directory>tests/Feature</directory>
+        <testsuite name="Extensions">
+            <directory>tests/Extensions</directory>
         </testsuite>
     </testsuites>
     <source>
