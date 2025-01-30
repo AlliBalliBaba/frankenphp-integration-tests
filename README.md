@@ -45,3 +45,17 @@ docker compose up -d
 docker compose exec frankenphp frankenphp start -c /app/Caddyfile
 docker compose exec frankenphp php artisan test --filter=OpenSSL
 ```
+
+## Viewing Caddy output
+
+To view the caddy output while testing, you can instead call `frankenphp run`:
+
+```bash
+docker compose exec frankenphp frankenphp start -c /app/Caddyfile
+```
+
+And the run the tests from a separate shell while watching the output:
+
+```bash
+docker compose exec frankenphp vendor/bin/paratest -p 4 -v
+```
