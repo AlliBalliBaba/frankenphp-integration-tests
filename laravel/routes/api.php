@@ -6,6 +6,7 @@ use App\Http\Controllers\Extensions\Gd;
 use App\Http\Controllers\Extensions\Gmp;
 use App\Http\Controllers\Extensions\Intl;
 use App\Http\Controllers\Extensions\OpCache;
+use App\Http\Controllers\Extensions\OpenSSL;
 use App\Http\Controllers\Extensions\Pdo;
 use App\Http\Controllers\Extensions\Redis;
 use App\Http\Controllers\Extensions\Xml;
@@ -67,6 +68,9 @@ Route::get('/gmp', [Gmp::class, 'convert']);
 
 # XML
 Route::post('/xml', [Xml::class, 'convert']);
+
+# OPENSSL
+Route::get('/openssl', [OpenSSL::class, 'encrypt']);
 
 # PDO
 Route::post('/pdo/{driver}', [Pdo::class, 'insert']);
