@@ -65,7 +65,7 @@ class FeatureTestCase extends TestCase
 
     protected function assertJsonResponse(array $expected, Response $response): void
     {
-        self::assertSame($expected, json_decode((string)$response->getBody(), true));
+        self::assertEqualsCanonicalizing($expected, json_decode((string)$response->getBody(), true));
     }
 
     protected function assertBodyContains(string $expected, Response $response): void

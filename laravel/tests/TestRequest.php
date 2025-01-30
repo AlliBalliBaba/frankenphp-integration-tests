@@ -40,9 +40,14 @@ class TestRequest
         return $query[$key] ?? '';
     }
 
+    public function getJsonBody()
+    {
+        return json_decode($this->body, true);
+    }
+
     public function getInJsonBody(string $key)
     {
-        return json_decode($this->body, true)[$key] ?? null;
+        return $this->getJsonBody()[$key] ?? null;
     }
 
     public function toPromise(Client $client): PromiseInterface
