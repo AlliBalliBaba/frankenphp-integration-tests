@@ -1,0 +1,29 @@
+{
+	admin localhost:2019
+
+	# disable https since we are always running in docker
+	skip_install_trust
+	auto_https off
+
+	frankenphp
+}
+
+:80 {
+	route {
+		encode zstd br gzip
+
+        @assets {
+            path /assets/*
+        }
+
+		file_server @assets {
+            root /app/public
+        }
+
+        # everything that is not in /assets is handled by your index or worker PHP file
+        rewrite index.php
+        php {
+            root /app/public
+        }
+	}
+}

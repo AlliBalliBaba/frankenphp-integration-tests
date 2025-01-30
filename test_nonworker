@@ -12,7 +12,7 @@ docker compose exec frankenphp php artisan migrate:fresh --database=mysql
 docker compose exec frankenphp php artisan migrate:fresh --database=pgsql
 
 # start the server
-docker compose exec -d frankenphp frankenphp run -c /app/resources/caddy/nonworker.Caddyfile
+docker compose exec -d frankenphp frankenphp run -c /app/resources/nonworker.Caddyfile
 
 # run the tests
 docker compose exec frankenphp php artisan test -p

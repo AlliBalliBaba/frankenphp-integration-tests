@@ -1,0 +1,37 @@
+{
+	admin localhost:2019
+
+	# disable https since we are always running in docker
+	skip_install_trust
+	auto_https off
+
+	frankenphp {
+	    max_threads {$MAX_THREADS:20}
+		worker {
+		    file "/app/public/frankenphp-worker.php"
+		    num {$WORKER_NUMBER:20}
+		    {$WATCH:watch}
+		}
+		php_ini mysqlnd.collect_statistics Off
+	}
+}
+
+:80 {
+	route {
+		encode zstd br gzip
+
+        @assets {
+            path /assets/*
+        }
+
+		file_server @assets {
+            root /app/public
+        }
+
+        # everything that is not in /assets is handled by your index or worker PHP file
+        rewrite frankenphp-worker.php
+        php {
+            root /app/public
+        }
+	}
+}
