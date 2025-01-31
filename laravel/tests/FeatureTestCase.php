@@ -3,6 +3,8 @@
 namespace Tests;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Handler\CurlMultiHandler;
+use GuzzleHttp\Pool;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Response;
 
@@ -25,20 +27,26 @@ class FeatureTestCase extends TestCase
      */
     protected function fetchParallel(array $requests, callable $assertion): void
     {
+        $handler = new CurlMultiHandler();
+
         $client = new Client([
             'base_uri' => self::HOST,
             'http_errors' => false,
+            'timeout' => 30,
+            'handler' => $handler,
         ]);
 
-        $promises = [];
-        foreach ($requests as $request) {
-            $promises[] = $request->toPromise($client);
+        $doneCount = 0;
+        foreach ($requests as $index => $request) {
+            $promise = $request->toPromise($client);
+            $promise->then(function (Response $response) use ($assertion, $request, $index, &$doneCount) {
+                $assertion($response, $request, $index);
+                $doneCount++;
+            });
         }
 
-        $responses = Promise\Utils::unwrap($promises);
-
-        foreach ($responses as $index => $response) {
-            $assertion($response, $requests[$index], $index);
+        while ($doneCount < count($requests)) {
+            $handler->tick();
         }
     }
 
