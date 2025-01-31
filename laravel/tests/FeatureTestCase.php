@@ -4,8 +4,6 @@ namespace Tests;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\CurlMultiHandler;
-use GuzzleHttp\Pool;
-use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Response;
 
 class FeatureTestCase extends TestCase
