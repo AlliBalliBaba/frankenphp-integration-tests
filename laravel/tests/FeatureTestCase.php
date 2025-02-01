@@ -29,22 +29,36 @@ class FeatureTestCase extends TestCase
 
         $client = new Client([
             'base_uri' => self::HOST,
-            'http_errors' => false,
             'timeout' => 30,
             'handler' => $handler,
         ]);
 
         $doneCount = 0;
+        $failure = null;
         foreach ($requests as $index => $request) {
             $promise = $request->toPromise($client);
-            $promise->then(function (Response $response) use ($assertion, $request, $index, &$doneCount) {
-                $assertion($response, $request, $index);
+            $promise->then(function (Response $response) use ($assertion, $request, $index, &$doneCount, &$failure) {
+                try {
+                    $assertion($response, $request, $index);
+                } catch (\Throwable $e) {
+                    $failure = $e;
+                }
+                $doneCount++;
+            })->otherwise(function (\Throwable $e, Response $response) use ($assertion,$request, $index, &$doneCount, &$failure) {
+                try {
+                    $assertion($response, $request, $index);
+                } catch (\Throwable $e) {
+                    $failure = $e;
+                }
                 $doneCount++;
             });
         }
 
-        while ($doneCount < count($requests)) {
+        while ($doneCount < count($requests) && !$failure) {
             $handler->tick();
+        }
+        if ($failure) {
+            throw $failure;
         }
     }
 

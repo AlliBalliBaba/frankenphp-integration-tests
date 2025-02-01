@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Extensions\Apcu;
 use App\Http\Controllers\Extensions\Curl;
+use App\Http\Controllers\Extensions\Exif;
 use App\Http\Controllers\Extensions\Gd;
 use App\Http\Controllers\Extensions\Gmp;
 use App\Http\Controllers\Extensions\Intl;
@@ -74,6 +75,9 @@ Route::get('/gmp', [Gmp::class, 'convert']);
 
 # XML
 Route::post('/xml', [Xml::class, 'convert']);
+
+# EXIF
+Route::get('/exif', [Exif::class, 'type']);
 
 # OPENSSL
 Route::get('/openssl', [OpenSSL::class, 'encrypt']);
