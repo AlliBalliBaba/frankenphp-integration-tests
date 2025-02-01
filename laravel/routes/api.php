@@ -3,6 +3,7 @@
 use App\Http\Controllers\Extensions\Apcu;
 use App\Http\Controllers\Extensions\Curl;
 use App\Http\Controllers\Extensions\Exif;
+use App\Http\Controllers\Extensions\Fiber;
 use App\Http\Controllers\Extensions\Gd;
 use App\Http\Controllers\Extensions\Gmp;
 use App\Http\Controllers\Extensions\Intl;
@@ -19,6 +20,7 @@ use App\Http\Controllers\Laravel\HelloWorldController;
 use App\Http\Controllers\Laravel\TemplateController;
 use App\Http\Controllers\Laravel\ThrowController;
 use App\Http\Controllers\Laravel\UploadController;
+use App\Http\Controllers\Other\Amphp;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HelloWorldController::class, 'hello']);
@@ -78,6 +80,9 @@ Route::post('/xml', [Xml::class, 'convert']);
 
 # EXIF
 Route::get('/exif', [Exif::class, 'type']);
+
+# FIBER
+Route::get('/fiber', [Fiber::class, 'start']);
 
 # OPENSSL
 Route::get('/openssl', [OpenSSL::class, 'encrypt']);

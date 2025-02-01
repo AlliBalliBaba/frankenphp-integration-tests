@@ -3,10 +3,10 @@
 
 	frankenphp {
 		max_threads auto
-		num_threads 11
+		num_threads 2
 		worker {
 			file "/app/public/frankenphp-worker.php"
-			num 10
+			num 1
 			watch
 		}
 		php_ini mysqlnd.collect_statistics Off
