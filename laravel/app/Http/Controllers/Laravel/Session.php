@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Laravel;
 
 use Illuminate\Http\Request;
 
-class SessionController
+class Session
 {
 
     public function get(Request $request): array

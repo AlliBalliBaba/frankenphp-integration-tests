@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Laravel;
 
 use Illuminate\Http\Request;
 
-class ThrowController
+class Abort
 {
 
     public function throw()

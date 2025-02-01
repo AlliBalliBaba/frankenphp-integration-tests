@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Laravel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class UploadController
+class Upload
 {
 
     public function flush(): array

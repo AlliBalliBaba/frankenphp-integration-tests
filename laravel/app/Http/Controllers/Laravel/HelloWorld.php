@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Laravel;
 
 use Illuminate\Http\Request;
 
-class HelloWorldController
+class HelloWorld
 {
 
     public function hello(): string

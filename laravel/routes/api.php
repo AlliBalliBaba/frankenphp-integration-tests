@@ -13,36 +13,36 @@ use App\Http\Controllers\Extensions\Pdo;
 use App\Http\Controllers\Extensions\Redis;
 use App\Http\Controllers\Extensions\Xml;
 use App\Http\Controllers\Extensions\Zip;
-use App\Http\Controllers\Laravel\EncryptController;
-use App\Http\Controllers\Laravel\FileCacheController;
-use App\Http\Controllers\Laravel\HashController;
-use App\Http\Controllers\Laravel\HelloWorldController;
-use App\Http\Controllers\Laravel\TemplateController;
-use App\Http\Controllers\Laravel\ThrowController;
-use App\Http\Controllers\Laravel\UploadController;
+use App\Http\Controllers\Laravel\Encrypt;
+use App\Http\Controllers\Laravel\FileCache;
+use App\Http\Controllers\Laravel\Hash;
+use App\Http\Controllers\Laravel\HelloWorld;
+use App\Http\Controllers\Laravel\Template;
+use App\Http\Controllers\Laravel\Abort;
+use App\Http\Controllers\Laravel\Upload;
 use App\Http\Controllers\Other\Amphp;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [HelloWorldController::class, 'hello']);
-Route::get('/query', [HelloWorldController::class, 'query']);
-Route::post('/post', [HelloWorldController::class, 'post']);
-Route::get('/server', [HelloWorldController::class, 'server']);
-Route::get('/headers', [HelloWorldController::class, 'headers']);
-Route::get('/sleep', [HelloWorldController::class, 'sleep']);
-Route::get('/table', [TemplateController::class, 'table']);
-Route::get('/encrypt', [EncryptController::class, 'encrypt']);
-Route::get('/decrypt', [EncryptController::class, 'decrypt']);
-Route::get('/hash', [HashController::class, 'hash']);
+Route::get('/', [HelloWorld::class, 'hello']);
+Route::get('/query', [HelloWorld::class, 'query']);
+Route::post('/post', [HelloWorld::class, 'post']);
+Route::get('/server', [HelloWorld::class, 'server']);
+Route::get('/headers', [HelloWorld::class, 'headers']);
+Route::get('/sleep', [HelloWorld::class, 'sleep']);
+Route::get('/table', [Template::class, 'table']);
+Route::get('/encrypt', [Encrypt::class, 'encrypt']);
+Route::get('/decrypt', [Encrypt::class, 'decrypt']);
+Route::get('/hash', [Hash::class, 'hash']);
 
-Route::get('/throw', [ThrowController::class, 'throw']);
-Route::get('/dd', [ThrowController::class, 'dd']);
-Route::get('/abort', [ThrowController::class, 'abort']);
+Route::get('/throw', [Abort::class, 'throw']);
+Route::get('/dd', [Abort::class, 'dd']);
+Route::get('/abort', [Abort::class, 'abort']);
 
-Route::post('/filecache', [FileCacheController::class, 'cache']);
-Route::post('/filecache/flush', [FileCacheController::class, 'flush']);
+Route::post('/filecache', [FileCache::class, 'cache']);
+Route::post('/filecache/flush', [FileCache::class, 'flush']);
 
-Route::post('/upload', [UploadController::class, 'upload']);
-Route::post('/upload/flush', [UploadController::class, 'flush']);
+Route::post('/upload', [Upload::class, 'upload']);
+Route::post('/upload/flush', [Upload::class, 'flush']);
 
 
 # Extensions

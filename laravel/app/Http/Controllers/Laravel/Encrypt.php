@@ -6,7 +6,7 @@ use Illuminate\Contracts\Encryption\Encrypter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-class EncryptController
+class Encrypt
 {
 
     public function encrypt(Encrypter $e): array

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Laravel;
 
 use Illuminate\Http\Request;
 
-class HashController
+class Hash
 {
 
     public function hash(Request $request): array

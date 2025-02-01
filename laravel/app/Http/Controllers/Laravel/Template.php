@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Laravel;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class TemplateController
+class Template
 {
 
     public function table(Request $request): View

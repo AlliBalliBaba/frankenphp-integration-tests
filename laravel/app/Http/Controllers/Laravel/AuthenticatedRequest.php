@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Laravel;
 
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 
-class AuthenticatedRequestController
+class AuthenticatedRequest
 {
 
     public function login(): array

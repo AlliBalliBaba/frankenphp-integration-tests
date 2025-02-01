@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Laravel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
-class FileCacheController
+class FileCache
 {
 
 
