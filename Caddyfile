@@ -10,7 +10,6 @@
 			watch
 		}
 		php_ini mysqlnd.collect_statistics Off
-		php_ini max_execution_time 5
 	}
 }
 
