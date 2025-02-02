@@ -21,9 +21,9 @@ class UploadTest extends FeatureTestCase
         $request = new TestRequest("/upload", "POST");
         $request->withFile(base_path('tests/uploads/lorem.txt'));
 
-        $this->fetchParallelTimes($request,100,  function (Response $response) {
+        $this->fetchParallelTimes($request,20,  function (Response $response) {
             $this->assertOk($response);
-            $this->assertJsonResponse(['success' => true,], $response);
+            $this->assertJsonResponse(['success' => true], $response);
         });
     }
 

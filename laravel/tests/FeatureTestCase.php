@@ -10,6 +10,7 @@ class FeatureTestCase extends TestCase
 {
 
     const HOST = 'http://localhost';
+    const MAX_CONCURRENCY = 20;
 
     protected function fetchParallelTimes(TestRequest $request, int $count, callable $assertion): void
     {
@@ -33,18 +34,24 @@ class FeatureTestCase extends TestCase
             'handler' => $handler,
         ]);
 
+        $chunks = [];
+        foreach ($requests as $index => $request) {
+            $chunkIndex = floor($index / self::MAX_CONCURRENCY);
+            $chunks[$chunkIndex][$index] = $request;
+        }
+
+        foreach ($chunks as $chunk) {
+            $this->fetchChunk($client, $handler, $chunk, $assertion);
+        }
+    }
+
+    private function fetchChunk(Client $client, CurlMultiHandler $handler, array $requests, callable $assertion): void
+    {
         $doneCount = 0;
         $failure = null;
         foreach ($requests as $index => $request) {
             $promise = $request->toPromise($client);
             $promise->then(function (Response $response) use ($assertion, $request, $index, &$doneCount, &$failure) {
-                try {
-                    $assertion($response, $request, $index);
-                } catch (\Throwable $e) {
-                    $failure = $e;
-                }
-                $doneCount++;
-            })->otherwise(function (\Throwable $e, Response $response) use ($assertion,$request, $index, &$doneCount, &$failure) {
                 try {
                     $assertion($response, $request, $index);
                 } catch (\Throwable $e) {

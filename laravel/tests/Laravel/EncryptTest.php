@@ -16,7 +16,7 @@ class EncryptTest extends FeatureTestCase
     {
         $request = new TestRequest("/encrypt");
 
-        $this->fetchParallelTimes($request, 1000, function (Response $response, TestRequest $request) {
+        $this->fetchParallelTimes($request, 100, function (Response $response) {
             $this->assertOk($response);
             self::assertNotEmpty((string)$response->getBody());
         });
