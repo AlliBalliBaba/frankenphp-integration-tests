@@ -8,7 +8,7 @@ It's main purpose is to make new FrankenPHP branches more resilient against bugs
 To run the tests you need `git`, `docker` and `docker compose`.
 The FrankenPHP image will be installed from a git branch of your choosing.
 
-To setup the local `frankenphp-custom-with-extensions` image:
+To set up the local `frankenphp-custom-with-extensions` image:
 
 ```bash
 sh setup
@@ -25,28 +25,11 @@ sh test
 ```
 
 This will start the custom `FrankenPHP` image, `PostgreSQL`, `MySQL`, `Redis` and run the tests
-in the `Laravel` repo.
+in `laravel/tests`.
 
-The tests are running in parallel through `PHPUnit` and `paratest` (`laravel/tests`)
-They are mainly calling the controllers in the `laravel/app//Http/Controllers` directory.
-Most tests will make ~100 requests in parallel
+The tests are running in parallel through `PHPUnit`, `paratest` and the Guzzle `CurlMultiHandler`
 
-### Caddyfile
-
-You can edit the `Caddyfile` in the root of the repo or add additonal Caddyfiles to test
-different configurations.
-
-## Running single tests
-
-To run single tests, you can start the server manually and adjust the `--filter`:
-
-```bash
-docker compose up -d
-docker compose exec frankenphp frankenphp start -c /app/Caddyfile
-docker compose exec frankenphp php artisan test --filter=OpenSSL
-```
-
-## Viewing Caddy output
+## Running tests manually
 
 To view the caddy output while testing, you can instead call `frankenphp run`:
 
@@ -58,5 +41,11 @@ docker compose exec frankenphp frankenphp run -c /app/Caddyfile
 And then run the tests from a separate terminal while watching the output:
 
 ```bash
-docker compose exec frankenphp vendor/bin/paratest -p 4 -v
+docker compose exec frankenphp vendor/bin/paratest -v
+```
+
+You can also filter for single tests
+
+```bash
+docker compose exec frankenphp vendor/bin/paratest --filter=OpenSSL
 ```
