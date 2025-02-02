@@ -44,4 +44,10 @@ class HelloWorld
         return ['ms' => $ms];
     }
 
+    public function timeout()
+    {
+        ini_set('max_execution_time', 1);
+        sleep(2);
+    }
+
 }

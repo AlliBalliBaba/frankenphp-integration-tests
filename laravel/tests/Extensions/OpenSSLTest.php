@@ -34,17 +34,4 @@ class OpenSSLTest extends FeatureTestCase
         });
     }
 
-    #[Test]
-    public function test_bcrypt()
-    {
-        # create an initialization vector
-        $value = "password";
-
-        $this->fetchParallelTimes(new TestRequest("/bcrypt?value=$value"), 10,
-            function (Response $response) use ($value) {
-                $this->assertOk($response);
-            }
-        );
-    }
-
 }

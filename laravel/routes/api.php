@@ -29,6 +29,7 @@ Route::post('/post', [HelloWorld::class, 'post']);
 Route::get('/server', [HelloWorld::class, 'server']);
 Route::get('/headers', [HelloWorld::class, 'headers']);
 Route::get('/sleep', [HelloWorld::class, 'sleep']);
+Route::get('/timeout', [HelloWorld::class, 'timeout']);
 Route::get('/table', [Template::class, 'table']);
 Route::get('/encrypt', [Encrypt::class, 'encrypt']);
 Route::get('/decrypt', [Encrypt::class, 'decrypt']);

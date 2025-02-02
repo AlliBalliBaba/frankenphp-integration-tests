@@ -6,6 +6,7 @@ use App\Models\Test;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class Pdo
 {
@@ -40,7 +41,10 @@ class Pdo
         config()->set('database.default', $this->getDriver($request));
 
         DB::beginTransaction();
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'email' => Str::random() . '@example.com',
+            'password' => 'something'
+        ]);
         usleep(1000);
         $existsInTransaction = User::query()->where('id', $user->id)->exists();
         DB::rollBack();
