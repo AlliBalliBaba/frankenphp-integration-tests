@@ -7,6 +7,7 @@ use App\Http\Controllers\Extensions\Fiber;
 use App\Http\Controllers\Extensions\Gd;
 use App\Http\Controllers\Extensions\Gmp;
 use App\Http\Controllers\Extensions\Intl;
+use App\Http\Controllers\Extensions\MysqliExt;
 use App\Http\Controllers\Extensions\OpCache;
 use App\Http\Controllers\Extensions\OpenSSL;
 use App\Http\Controllers\Extensions\Pdo;
@@ -20,7 +21,6 @@ use App\Http\Controllers\Laravel\HelloWorld;
 use App\Http\Controllers\Laravel\Template;
 use App\Http\Controllers\Laravel\Abort;
 use App\Http\Controllers\Laravel\Upload;
-use App\Http\Controllers\Other\Amphp;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HelloWorld::class, 'hello']);
@@ -34,6 +34,8 @@ Route::get('/table', [Template::class, 'table']);
 Route::get('/encrypt', [Encrypt::class, 'encrypt']);
 Route::get('/decrypt', [Encrypt::class, 'decrypt']);
 Route::get('/hash', [Hash::class, 'hash']);
+Route::get('/mysqli', [MysqliExt::class, 'query']);
+Route::get('/mysqli/denied', [MysqliExt::class, 'accessDenied']);
 
 Route::get('/throw', [Abort::class, 'throw']);
 Route::get('/dd', [Abort::class, 'dd']);

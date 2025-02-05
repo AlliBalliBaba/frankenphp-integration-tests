@@ -1,6 +1,6 @@
 FROM frankenphp-custom
 
-RUN install-php-extensions @composer gmp xml apcu curl pcntl pdo_mysql pdo_pgsql pdo_sqlite redis gd zip bcmath intl opcache xdebug exif
+RUN install-php-extensions @composer mysqli gmp xml apcu curl pcntl pdo_mysql pdo_pgsql pdo_sqlite redis gd zip bcmath intl opcache xdebug exif
 
 # Change the UID of the www-data user to match the host's UID
 RUN usermod -u 1000 www-data
