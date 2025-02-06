@@ -14,6 +14,9 @@
         <testsuite name="Server">
             <directory>tests/Server</directory>
         </testsuite>
+        <testsuite name="Symfony">
+            <directory>tests/Symfony</directory>
+        </testsuite>
     </testsuites>
     <source>
         <include>

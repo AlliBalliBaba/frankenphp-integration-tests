@@ -14,7 +14,8 @@ goimage=${goimage:-golang:1.23}
 rm -rf frankenphp
 
 # clone the FrankenPHP branch to install from
-git clone -b "$branch" https://github.com/dunglas/frankenphp.git
+#git clone -b "$branch" https://github.com/dunglas/frankenphp.git
+cp ../fork3/frankenphp frankenphp -r
 
 cd frankenphp && docker build -t frankenphp-custom --build-context "php-base=docker-image://$phpimage" --build-context "golang-base=docker-image://$goimage" .
 cd ..
@@ -23,6 +24,6 @@ cd ..
 docker build -t frankenphp-custom-with-extensions -f frankenphp.Dockerfile .
 docker compose up -d
 docker compose exec frankenphp composer update
-docker compose exec frankenphp cp env.example .env
+docker compose exec frankenphp cp .env.example .env
 docker compose exec frankenphp php artisan key:generate
 docker compose exec frankenphp php artisan octane:install --server=frankenphp

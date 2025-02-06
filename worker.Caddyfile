@@ -2,14 +2,23 @@
 	# worker mode Caddyfile
 
 	frankenphp {
-		max_threads auto
-		num_threads 2
+		max_threads 10
+		num_threads 3
 		worker {
 			file "/app/public/frankenphp-worker.php"
 			num 1
 			watch
 		}
+
+		worker {
+			file "/symfony/public/index.php"
+			num 1
+		}
+
 		php_ini mysqlnd.collect_statistics Off
+		php_ini opcache.jit tracing
+		php_ini tideways.collect tracing
+		#php_ini soap.wsdl_cache	1
 	}
 }
 
@@ -29,6 +38,17 @@
 		rewrite frankenphp-worker.php
 		php {
 			root /app/public
+		}
+	}
+}
+
+:8000 {
+	route {
+		encode zstd br gzip
+
+		rewrite index.php
+		php {
+			root /symfony/public
 		}
 	}
 }

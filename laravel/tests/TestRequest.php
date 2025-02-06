@@ -9,6 +9,7 @@ class TestRequest
 {
 
     public string $body = "";
+    public string $host = "http://localhost";
     public array $multipart = [];
     public array $headers = [];
 

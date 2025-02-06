@@ -9,7 +9,6 @@ use GuzzleHttp\Psr7\Response;
 class FeatureTestCase extends TestCase
 {
 
-    const HOST = 'http://localhost';
     const MAX_CONCURRENCY = 20;
 
     protected function fetchParallelTimes(TestRequest $request, int $count, callable $assertion): void
@@ -29,7 +28,7 @@ class FeatureTestCase extends TestCase
         $handler = new CurlMultiHandler();
 
         $client = new Client([
-            'base_uri' => self::HOST,
+            'base_uri' => $requests[0]->host ?? 'http://localhost',
             'timeout' => 30,
             'handler' => $handler,
         ]);

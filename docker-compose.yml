@@ -8,17 +8,15 @@ services:
     image: frankenphp-custom-with-extensions
     volumes:
       - ./laravel:/app
+      - ./symfony:/symfony
     working_dir: /app
     user: www-data
     links:
       - pgsql
       - mysql
       - redis
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     environment:
-      - "CADDYFILE=/app/Caddyfile"
-      - "ASSET_HOST=http://localhost:8790"
+      - "APP_RUNTIME=Runtime\\FrankenPhpSymfony\\Runtime"
     entrypoint: ['tail', '-f', '/dev/null']
   mysql:
     image: mysql:8.0
