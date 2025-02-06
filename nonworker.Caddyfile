@@ -26,3 +26,14 @@
 		}
 	}
 }
+
+:8000 {
+	route {
+		encode zstd br gzip
+
+		rewrite index.php
+		php {
+			root /symfony/public
+		}
+	}
+}

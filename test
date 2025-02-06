@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # let the user choose the Caddyfile before the test
-read -p "Which Caddyfile? [Caddyfile]: " caddyfile
-caddyfile=${caddyfile:-Caddyfile}
+read -p "Which Caddyfile? [worker.Caddyfile]: " caddyfile
+caddyfile=${caddyfile:-worker.Caddyfile}
 cp "$caddyfile" ./laravel/Caddyfile
 
 # start in case we're not running
