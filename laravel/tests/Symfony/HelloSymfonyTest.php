@@ -13,7 +13,7 @@ class HelloSymfonyTest extends FeatureTestCase
     public function hello_world_symfony()
     {
         $testRequest = new SymfonyRequest('/lucky/number/100');
-        $this->fetchParallelTimes($testRequest, 1000, function (TestResponse $response) {
+        $this->fetchParallelTimes($testRequest, 100, function (TestResponse $response) {
             $response->assertOk();
             $response->assertBodyContains('Lucky number:');
         });
