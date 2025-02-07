@@ -6,6 +6,7 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\FeatureTestCase;
 use Tests\TestRequest;
+use Tests\TestResponse;
 
 class AuthenticatedRequestTest extends FeatureTestCase
 {
@@ -20,9 +21,9 @@ class AuthenticatedRequestTest extends FeatureTestCase
         $this->fetchParallelTimes(
             new TestRequest("/auth/login"),
             100,
-            function (Response $response) use (&$users, &$sessionCookies) {
-                $this->assertOk($response);
-                $user = json_decode($response->getBody()->getContents(), true)['user'];
+            function (TestResponse $response) use (&$users, &$sessionCookies) {
+                $response->assertOk();
+                $user = $response->getJsonBody()['user'];
                 $sessionCookies[] = $response->getHeader('Set-Cookie');
                 $users[] = $user;
             });
@@ -35,13 +36,13 @@ class AuthenticatedRequestTest extends FeatureTestCase
             $requests[$i]->header('Cookie', implode('; ', $sessionCookies[$i]));
         }
 
-        $this->fetchParallel($requests, function (Response $response, TestRequest $request) use ($users) {
-            $this->assertOk($response);
-            $expectedUser = $users[$request->getQuery('index')];
+        $this->fetchParallel($requests, function (TestResponse $response) use ($users) {
+            $response->assertOk();
+            $expectedUser = $users[$response->getQuery('index')];
 
-            $this->assertJsonResponse([
+            $response->assertJson([
                 'user' => $expectedUser
-            ], $response);
+            ]);
         });
     }
 

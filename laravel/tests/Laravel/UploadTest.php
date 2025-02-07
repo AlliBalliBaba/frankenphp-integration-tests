@@ -6,6 +6,7 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\FeatureTestCase;
 use Tests\TestRequest;
+use Tests\TestResponse;
 
 class UploadTest extends FeatureTestCase
 {
@@ -14,16 +15,16 @@ class UploadTest extends FeatureTestCase
     public function upload()
     {
         // flush the cache
-        $this->fetch(new TestRequest("/upload/flush", "POST"), function (Response $response) {
-            $this->assertOk($response);
+        $this->fetch(new TestRequest("/upload/flush", "POST"), function (TestResponse $response) {
+            $response->assertOk();
         });
 
         $request = new TestRequest("/upload", "POST");
         $request->withFile(base_path('tests/uploads/lorem.txt'));
 
-        $this->fetchParallelTimes($request,20,  function (Response $response) {
-            $this->assertOk($response);
-            $this->assertJsonResponse(['success' => true], $response);
+        $this->fetchParallelTimes($request,20,  function (TestResponse $response) {
+            $response->assertOk();
+            $response->assertJson(['success' => true]);
         });
     }
 

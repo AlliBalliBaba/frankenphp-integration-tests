@@ -6,6 +6,7 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\FeatureTestCase;
 use Tests\TestRequest;
+use Tests\TestResponse;
 
 class FileCacheTest extends FeatureTestCase
 {
@@ -14,8 +15,9 @@ class FileCacheTest extends FeatureTestCase
     public function file_cache_and_fetch()
     {
         // flush the cache
-        $this->fetch(new TestRequest("/filecache/flush", "POST"), function (Response $response) {
-            $this->assertOk($response);
+        $request = new TestRequest("/filecache/flush", "POST");
+        $this->fetch($request , function (TestResponse $response) {
+            $response->assertOk();
         });
 
         // test the cache
@@ -28,12 +30,12 @@ class FileCacheTest extends FeatureTestCase
             ]);
         }
 
-        $this->fetchParallel($requests, function (Response $response, TestRequest $request) {
-            $this->assertOk($response);
-            $this->assertJsonResponse([
+        $this->fetchParallel($requests, function (TestResponse $response) {
+            $response->assertOk();
+            $response->assertJson([
                 'success' => true,
-                'value' => $request->getInJsonBody('value'),
-            ], $response);
+                'value' => $response->getInRequestBody('value'),
+            ]);
         });
     }
 

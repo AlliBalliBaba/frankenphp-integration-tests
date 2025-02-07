@@ -6,6 +6,7 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\FeatureTestCase;
 use Tests\TestRequest;
+use Tests\TestResponse;
 
 class ThrowTest extends FeatureTestCase
 {
@@ -15,8 +16,8 @@ class ThrowTest extends FeatureTestCase
     {
         $request = new TestRequest('/throw');
 
-        $this->fetchParallelTimes($request, 100, function (Response $response) {
-            $this->assertStatusCode($response, 500);
+        $this->fetchParallelTimes($request, 100, function (TestResponse $response) {
+            $response->assertStatusCode(500);
         });
     }
 
@@ -25,8 +26,8 @@ class ThrowTest extends FeatureTestCase
     {
         $request = new TestRequest('/dd');
 
-        $this->fetchParallelTimes($request, 100, function (Response $response) {
-            $this->assertStatusCode($response, 500);
+        $this->fetchParallelTimes($request, 100, function (TestResponse $response) {
+            $response->assertStatusCode(500);
         });
     }
 
@@ -39,9 +40,9 @@ class ThrowTest extends FeatureTestCase
             $requests[] = new TestRequest("/abort?code=$code");
         }
 
-        $this->fetchParallel($requests, function (Response $response, TestRequest $request) {
-            $expectedCode = (int)$request->getQuery('code');
-            $this->assertStatusCode($response, $expectedCode);
+        $this->fetchParallel($requests, function (TestResponse $response) {
+            $expectedCode = (int)$response->getQuery('code');
+            $response->assertStatusCode($expectedCode);
         });
     }
 

@@ -6,6 +6,7 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\FeatureTestCase;
 use Tests\TestRequest;
+use Tests\TestResponse;
 
 class XmlTest extends FeatureTestCase
 {
@@ -17,14 +18,14 @@ class XmlTest extends FeatureTestCase
         $request = new TestRequest("/xml", 'POST');
         $request->body($xml);
 
-        $this->fetchParallelTimes($request, 100, function (Response $response) {
-            $this->assertOk($response);
-            $this->assertJsonKeysInResponse([
+        $this->fetchParallelTimes($request, 100, function (TestResponse $response) {
+            $response->assertOk();
+            $response->assertJsonKeysInResponse([
                 'item' => [
                     ['name' => 'Item 1', 'price' => '100'],
                     ['name' => 'Item 2', 'price' => '200']
                 ]
-            ], $response);
+            ]);
         });
     }
 

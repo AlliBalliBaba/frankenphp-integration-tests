@@ -1,5 +1,6 @@
 <?php
 
+namespace Tests\Laravel;
 
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Contracts\Encryption\Encrypter;
@@ -7,6 +8,7 @@ use Illuminate\Support\Str;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\FeatureTestCase;
 use Tests\TestRequest;
+use Tests\TestResponse;
 
 class EncryptTest extends FeatureTestCase
 {
@@ -16,9 +18,9 @@ class EncryptTest extends FeatureTestCase
     {
         $request = new TestRequest("/encrypt");
 
-        $this->fetchParallelTimes($request, 100, function (Response $response) {
-            $this->assertOk($response);
-            self::assertNotEmpty((string)$response->getBody());
+        $this->fetchParallelTimes($request, 100, function (TestResponse $response) {
+            $response->assertOk();
+            self::assertNotEmpty($response->getBody());
         });
     }
 
@@ -34,10 +36,10 @@ class EncryptTest extends FeatureTestCase
             $requests[] = new TestRequest("/decrypt?value=$encryptedValue");
         }
 
-        $this->fetchParallel($requests, function (Response $response, TestRequest $request, int $index) use ($values) {
-            $this->assertOk($response);
-            $expectedValue = $values[$index];
-            $this->assertJsonResponse(['value' => $expectedValue], $response);
+        $this->fetchParallel($requests, function (TestResponse $response) use ($values) {
+            $response->assertOk();
+            $expectedValue = $values[$response->index];
+            $response->assertJson(['value' => $expectedValue]);
         });
     }
 

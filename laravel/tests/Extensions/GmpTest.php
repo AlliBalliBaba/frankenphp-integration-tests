@@ -2,10 +2,10 @@
 
 namespace Tests\Extensions;
 
-use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\FeatureTestCase;
 use Tests\TestRequest;
+use Tests\TestResponse;
 
 class GmpTest extends FeatureTestCase
 {
@@ -24,13 +24,13 @@ class GmpTest extends FeatureTestCase
 
         $requests = array_map(fn($value) => new TestRequest("/gmp?value=$value"), $values);
 
-        $this->fetchParallel($requests, function (Response $response, TestRequest $request) {
-            $this->assertOk($response);
-            $initialValue = $request->getQuery('value');
-            $this->assertJsonResponse([
+        $this->fetchParallel($requests, function (TestResponse $response) {
+            $response->assertOk();
+            $initialValue = $response->getQuery('value');
+            $response->assertJson([
                 'success' => true,
                 'value' => gmp_strval(gmp_init($initialValue, 10)),
-            ], $response);
+            ]);
         });
     }
 

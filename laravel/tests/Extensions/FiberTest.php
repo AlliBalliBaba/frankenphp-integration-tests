@@ -1,10 +1,11 @@
 <?php
 
+namespace Tests\Extensions;
 
-use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\FeatureTestCase;
 use Tests\TestRequest;
+use Tests\TestResponse;
 
 class FiberTest extends FeatureTestCase
 {
@@ -12,9 +13,9 @@ class FiberTest extends FeatureTestCase
     #[Test]
     public function execute_a_fiber()
     {
-        $this->fetchParallelTimes(new TestRequest("/fiber"), 100, function (Response $response) {
-            $this->assertOk($response);
-            $this->assertBodyContains('Hello World!', $response);
+        $this->fetchParallelTimes(new TestRequest("/fiber"), 100, function (TestResponse $response) {
+            $response->assertOk();
+            $response->assertBodyContains('Hello World!');
         });
     }
 

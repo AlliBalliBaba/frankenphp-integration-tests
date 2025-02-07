@@ -6,6 +6,7 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\FeatureTestCase;
 use Tests\TestRequest;
+use Tests\TestResponse;
 
 class PdoTest extends FeatureTestCase
 {
@@ -49,8 +50,8 @@ class PdoTest extends FeatureTestCase
     private function runInserts(string $driver): void
     {
         // first flush the DB
-        $this->fetch(new TestRequest("/pdo/$driver/flush", "POST"), function (Response $response) {
-            $this->assertOk($response);
+        $this->fetch(new TestRequest("/pdo/$driver/flush", "POST"), function (TestResponse $response) {
+            $response->assertOk();
         });
 
         // insert 50 users
@@ -62,24 +63,26 @@ class PdoTest extends FeatureTestCase
             ]);
         }
 
-        $this->fetchParallel($requests, function (Response $response, TestRequest $request) {
-            $this->assertOk($response);
+        $this->fetchParallel($requests, function (TestResponse $response) {
+            $response->assertOk();
 
-            $this->assertJsonResponse([
+            $response->assertJson([
                 'success' => true,
                 'test' => [
-                    'name' => $request->getInJsonBody('name'),
+                    'name' => $response->getInRequestBody('name'),
                 ],
-            ], $response);
+            ]);
         });
     }
 
     private function runTransactions(string $driver): void
     {
-        $this->fetchParallelTimes(new TestRequest("/pdo/$driver/transaction"), 20, function (Response $response, TestRequest $request) {
-            $this->assertOk($response);
+        $request = new TestRequest("/pdo/$driver/transaction");
 
-            $this->assertJsonResponse(['success' => true], $response);
+        $this->fetchParallelTimes($request, 20, function (TestResponse $response) {
+            $response->assertOk();
+
+            $response->assertJson(['success' => true]);
         });
     }
 

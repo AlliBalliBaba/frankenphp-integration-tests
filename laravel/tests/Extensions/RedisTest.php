@@ -6,6 +6,7 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\FeatureTestCase;
 use Tests\TestRequest;
+use Tests\TestResponse;
 
 class RedisTest extends FeatureTestCase
 {
@@ -14,8 +15,8 @@ class RedisTest extends FeatureTestCase
     public function redis_cache_and_fetch()
     {
         // flush the cache
-        $this->fetch(new TestRequest("/redis/flush", "POST"), function (Response $response) {
-            $this->assertOk($response);
+        $this->fetch(new TestRequest("/redis/flush", "POST"), function (TestResponse $response) {
+            $response->assertOk();
         });
 
         // test the cache
@@ -28,12 +29,12 @@ class RedisTest extends FeatureTestCase
             ]);
         }
 
-        $this->fetchParallel($requests, function (Response $response, TestRequest $request) {
-            $this->assertOk($response);
-            $this->assertJsonResponse([
+        $this->fetchParallel($requests, function (TestResponse $response) {
+            $response->assertOk();
+            $response->assertJson([
                 'success' => true,
-                'value' => $request->getInJsonBody('value'),
-            ], $response);
+                'value' => $response->getInRequestBody('value'),
+            ]);
         });
     }
 

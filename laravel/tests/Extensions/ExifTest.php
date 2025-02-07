@@ -6,6 +6,7 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\FeatureTestCase;
 use Tests\TestRequest;
+use Tests\TestResponse;
 
 class ExifTest extends FeatureTestCase
 {
@@ -17,9 +18,9 @@ class ExifTest extends FeatureTestCase
         $file = urlencode(resource_path('images/image.jpg'));
         $request = new TestRequest("/exif?file=$file");
 
-        $this->fetchParallelTimes($request, 40, function (Response $response) {
-            $this->assertOk($response);
-            $this->assertJsonResponse(['type' => IMAGETYPE_JPEG], $response);
+        $this->fetchParallelTimes($request, 40, function (TestResponse $response) {
+            $response->assertOk();
+            $response->assertJson(['type' => IMAGETYPE_JPEG]);
         });
     }
 
@@ -29,9 +30,9 @@ class ExifTest extends FeatureTestCase
         $file = urlencode(resource_path('images/image.png'));
         $request = new TestRequest("/exif?file=$file");
 
-        $this->fetchParallelTimes($request, 40, function (Response $response) {
-            $this->assertOk($response);
-            $this->assertJsonResponse(['type' => IMAGETYPE_PNG], $response);
+        $this->fetchParallelTimes($request, 40, function (TestResponse $response) {
+            $response->assertOk();
+            $response->assertJson(['type' => IMAGETYPE_PNG]);
         });
     }
 

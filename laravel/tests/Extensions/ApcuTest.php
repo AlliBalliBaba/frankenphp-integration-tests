@@ -6,6 +6,7 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\FeatureTestCase;
 use Tests\TestRequest;
+use Tests\TestResponse;
 
 class ApcuTest extends FeatureTestCase
 {
@@ -14,8 +15,8 @@ class ApcuTest extends FeatureTestCase
     public function apcu_cache_and_fetch()
     {
         // flush the cache
-        $this->fetch(new TestRequest("/apcu/flush", "POST"), function (Response $response) {
-            $this->assertOk($response);
+        $this->fetch(new TestRequest("/apcu/flush", "POST"), function (TestResponse $response) {
+            $response->assertOk();
         });
 
         // test the cache
@@ -28,12 +29,12 @@ class ApcuTest extends FeatureTestCase
             ]);
         }
 
-        $this->fetchParallel($requests, function (Response $response, TestRequest $request) {
-            $this->assertOk($response);
-            $this->assertJsonResponse([
+        $this->fetchParallel($requests, function (TestResponse $response) {
+            $response->assertOk();
+            $response->assertJson([
                 'success' => true,
-                'value' => $request->getInJsonBody('value'),
-            ], $response);
+                'value' => $response->request->getInJsonBody('value'),
+            ]);
         });
     }
 

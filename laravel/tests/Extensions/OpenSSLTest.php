@@ -5,6 +5,7 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\FeatureTestCase;
 use Tests\TestRequest;
+use Tests\TestResponse;
 
 class OpenSSLTest extends FeatureTestCase
 {
@@ -22,15 +23,15 @@ class OpenSSLTest extends FeatureTestCase
             $requests[] = new TestRequest($url);
         }
 
-        $this->fetchParallel($requests, function (Response $response, TestRequest $request) use ($iv) {
-            $this->assertOk($response);
-            $passPhrase = $request->getQuery('passphrase');
-            $data = $request->getQuery('data');
+        $this->fetchParallel($requests, function (TestResponse $response) use ($iv) {
+            $response->assertOk();
+            $passPhrase = $response->getQuery('passphrase');
+            $data = $response->getQuery('data');
 
             // make sure cli and web return the same result
-            $this->assertJsonResponse([
+            $response->assertJson([
                 'data' => openssl_encrypt($data, 'aes-256-cbc', $passPhrase, 0, $iv),
-            ], $response);
+            ]);
         });
     }
 

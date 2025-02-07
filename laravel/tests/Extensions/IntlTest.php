@@ -6,6 +6,7 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\FeatureTestCase;
 use Tests\TestRequest;
+use Tests\TestResponse;
 
 class IntlTest extends FeatureTestCase
 {
@@ -15,11 +16,11 @@ class IntlTest extends FeatureTestCase
     {
         $calendar = \IntlCalendar::createInstance('Europe/Vienna', 'de_DE');
 
-        $this->fetchParallelTimes(new TestRequest("/intl"), 100, function (Response $response) use ($calendar) {
-            $this->assertOk($response);
-            $this->assertJsonResponse([
+        $this->fetchParallelTimes(new TestRequest("/intl"), 100, function (TestResponse $response) use ($calendar) {
+            $response->assertOk();
+            $response->assertJson([
                 'first_day_of_week' => $calendar->getFirstDayOfWeek(),
-            ], $response);
+            ]);
         });
     }
 

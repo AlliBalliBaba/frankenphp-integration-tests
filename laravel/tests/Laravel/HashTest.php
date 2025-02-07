@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\FeatureTestCase;
 use Tests\TestRequest;
+use Tests\TestResponse;
 
 class HashTest extends FeatureTestCase
 {
@@ -24,10 +25,10 @@ class HashTest extends FeatureTestCase
             $requests[] = new TestRequest('/hash?value=' . urlencode($value));
         }
 
-        $this->fetchParallel($requests, function (Response $response, TestRequest $request, int $index) use ($hashes) {
-            $this->assertOk($response);
-            $expectedValue = $hashes[$index];
-            $this->assertJsonResponse(['value' => $expectedValue], $response);
+        $this->fetchParallel($requests, function (TestResponse $response) use ($hashes) {
+            $response->assertOk();
+            $expectedValue = $hashes[$response->index];
+            $response->assertJson(['value' => $expectedValue]);
         });
     }
 

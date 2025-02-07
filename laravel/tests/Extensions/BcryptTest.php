@@ -2,10 +2,10 @@
 
 namespace Tests\Extensions;
 
-use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\FeatureTestCase;
 use Tests\TestRequest;
+use Tests\TestResponse;
 
 class BcryptTest extends FeatureTestCase
 {
@@ -16,8 +16,8 @@ class BcryptTest extends FeatureTestCase
         $value = "password";
 
         $this->fetchParallelTimes(new TestRequest("/bcrypt?value=$value"), 10,
-            function (Response $response) use ($value) {
-                $this->assertOk($response);
+            function (TestResponse $response) use ($value) {
+                $response->assertOk();
             }
         );
     }

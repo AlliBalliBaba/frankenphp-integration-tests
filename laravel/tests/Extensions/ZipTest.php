@@ -1,10 +1,12 @@
 <?php
 
+namespace Tests\Extensions;
 
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\FeatureTestCase;
 use Tests\TestRequest;
+use Tests\TestResponse;
 
 class ZipTest extends FeatureTestCase
 {
@@ -13,8 +15,8 @@ class ZipTest extends FeatureTestCase
     public function zip_100_files()
     {
         // flush the cache
-        $this->fetch(new TestRequest("/zip/flush", "POST"), function (Response $response) {
-            $this->assertOk($response);
+        $this->fetch(new TestRequest("/zip/flush", "POST"), function (TestResponse $response) {
+            $response->assertOk();
         });
 
         // test the cache
@@ -23,9 +25,9 @@ class ZipTest extends FeatureTestCase
             $requests[] = new TestRequest("/zip?file=$i", "POST");
         }
 
-        $this->fetchParallel($requests, function (Response $response) {
-            $this->assertOk($response);
-            $this->assertJsonResponse(['success' => true,], $response);
+        $this->fetchParallel($requests, function (TestResponse $response) {
+            $response->assertOk();
+            $response->assertJson(['success' => true,]);
         });
     }
 

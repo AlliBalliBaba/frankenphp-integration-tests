@@ -52,7 +52,8 @@ class FeatureTestCase extends TestCase
             $promise = $request->toPromise($client);
             $promise->then(function (Response $response) use ($assertion, $request, $index, &$doneCount, &$failure) {
                 try {
-                    $assertion($response, $request, $index);
+                    $testResponse = new TestResponse($index, $this, $request, $response);
+                    $assertion($testResponse);
                 } catch (\Throwable $e) {
                     $failure = $e;
                 }
@@ -72,51 +73,5 @@ class FeatureTestCase extends TestCase
     {
         $this->fetchParallel([$request], $assertion);
     }
-
-    protected function assertOk(Response $response): void
-    {
-        $this->assertStatusCode($response, 200);
-    }
-
-    protected function assertStatusCode(Response $response, int $expected): void
-    {
-        $statusCode = $response->getStatusCode();
-        if ($statusCode === 500 && $expected !== 500) {
-            $message = (string)$response->getBody();
-            $this->fail("Expected status code $expected but got 500:\n\n$message");
-        }
-
-        self::assertSame($expected, $response->getStatusCode());
-    }
-
-    protected function assertJsonResponse(array $expected, Response $response): void
-    {
-        self::assertEqualsCanonicalizing($expected, json_decode((string)$response->getBody(), true));
-    }
-
-    protected function assertBodyContains(string $expected, Response $response): void
-    {
-        self::assertStringContainsString($expected, (string)$response->getBody());
-    }
-
-    protected function assertJsonKeysInResponse(array $expected, Response $response): void
-    {
-        $body = (string)$response->getBody();
-        $responseJson = json_decode($body, true);
-
-        foreach ($expected as $key => $value) {
-            if ($value !== ($responseJson[$key] ?? null)) {
-                $sanitizedValue = json_encode($value);
-                self::fail("Expected key $key with value $sanitizedValue but got\n\n$body");
-            }
-        }
-    }
-
-    protected function extractCookie(Response $response): string
-    {
-        $cookies = $response->getHeader('Set-Cookie');
-        return implode('; ', $cookies);
-    }
-
 
 }

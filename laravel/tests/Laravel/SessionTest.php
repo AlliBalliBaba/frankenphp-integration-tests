@@ -6,6 +6,7 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\FeatureTestCase;
 use Tests\TestRequest;
+use Tests\TestResponse;
 
 class SessionTest extends FeatureTestCase
 {
@@ -32,10 +33,10 @@ class SessionTest extends FeatureTestCase
         $this->fetchParallelTimes(
             new TestRequest("/session/$driver?key=foo"),
             self::AMOUNT,
-            function (Response $response) use (&$cookies) {
-                $this->assertOk($response);
-                $this->assertJsonResponse(['value' => null], $response);
-                $cookies[] = $this->extractCookie($response);
+            function (TestResponse $response) use (&$cookies) {
+                $response->assertOk();
+                $response->assertJson(['value' => null]);
+                $cookies[] = $response->extractCookie();
             }
         );
 
@@ -49,11 +50,11 @@ class SessionTest extends FeatureTestCase
             range(0, self::AMOUNT - 1)
         );
 
-        $this->fetchParallel($requests, function (Response $response, TestRequest $request) use (&$cookies) {
-            $this->assertOk($response);
-            $index = (int)$request->getQuery('value');
-            $this->assertJsonResponse(['success' => true], $response);
-            $cookies[$index] = $this->extractCookie($response);
+        $this->fetchParallel($requests, function (TestResponse $response) use (&$cookies) {
+            $response->assertOk();
+            $index = (int)$response->getQuery('value');
+            $response->assertJson(['success' => true], );
+            $cookies[$index] = $response->extractCookie();
         });
 
         // get value from session
@@ -66,9 +67,9 @@ class SessionTest extends FeatureTestCase
             range(0, self::AMOUNT - 1)
         );
 
-        $this->fetchParallel($requests, function (Response $response, TestRequest $request, int $index) {
-            $this->assertOk($response);
-            $this->assertJsonResponse(['value' => $index], $response);
+        $this->fetchParallel($requests, function (TestResponse $response) {
+            $response->assertOk();
+            $response->assertJson(['value' => $response->index]);
         });
     }
 

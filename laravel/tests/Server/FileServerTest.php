@@ -6,6 +6,7 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\FeatureTestCase;
 use Tests\TestRequest;
+use Tests\TestResponse;
 
 class FileServerTest extends FeatureTestCase
 {
@@ -13,9 +14,10 @@ class FileServerTest extends FeatureTestCase
     #[Test]
     public function fetch_from_fileserver()
     {
-        $this->fetchParallelTimes(new TestRequest('/assets/hello.txt'), 100,function (Response $response) {
-            $this->assertOk($response);
-            $this->assertBodyContains('Hello fileserver!', $response);
+        $request = new TestRequest('/assets/hello.txt');
+        $this->fetchParallelTimes($request, 100, function (TestResponse $response) {
+            $response->assertOk();
+            $response->assertBodyContains('Hello fileserver!');
         });
     }
 

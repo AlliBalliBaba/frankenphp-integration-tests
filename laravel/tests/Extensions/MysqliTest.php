@@ -1,10 +1,13 @@
 <?php
 
+namespace Tests\Extensions;
 
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\FeatureTestCase;
 use Tests\TestRequest;
+use Tests\TestResponse;
+
 
 class MysqliTest extends FeatureTestCase
 {
@@ -13,9 +16,9 @@ class MysqliTest extends FeatureTestCase
     public function test_query()
     {
         $this->fetchParallelTimes(new TestRequest("/mysqli"), 100,
-            function (Response $response) {
-                $this->assertOk($response);
-                $this->assertJsonResponse(['success' => true], $response);
+            function (TestResponse $response) {
+                $response->assertOk();
+                $response->assertJson(['success' => true]);
             }
         );
     }
@@ -24,8 +27,8 @@ class MysqliTest extends FeatureTestCase
     public function test_access_denied()
     {
         $this->fetchParallelTimes(new TestRequest("/mysqli/denied"), 5,
-            function (Response $response) {
-                $this->assertStatusCode($response, 500);
+            function (TestResponse $response) {
+                $response->assertStatusCode(500);
             }
         );
     }
