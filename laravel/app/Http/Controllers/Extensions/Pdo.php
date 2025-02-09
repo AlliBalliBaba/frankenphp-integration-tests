@@ -48,7 +48,7 @@ class Pdo
         usleep(1000);
         $existsInTransaction = User::query()->where('id', $user->id)->exists();
         DB::rollBack();
-        $doesNotExistAfterRollback = !User::query()->where('id', $user->id)->exists();
+        $doesNotExistAfterRollback = !User::query()->where('email', $user->email)->exists();
 
         return [
             'success' => $existsInTransaction && $doesNotExistAfterRollback
