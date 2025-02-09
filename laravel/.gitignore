@@ -26,3 +26,7 @@ yarn-error.log
 frankenphp
 frankenphp-worker.php
 Caddyfile
+
+# profiling
+flame.svg
+xhprof.profile

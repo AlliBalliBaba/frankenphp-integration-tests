@@ -1,0 +1,8 @@
+#!/bin/bash
+docker compose up -d
+
+docker compose exec frankenphp frankenphp start -c /app/Caddyfile
+
+sleep 1
+
+docker compose exec frankenphp wrk -t4 -c50 http://localhost:80/
