@@ -1,6 +1,7 @@
 <div>
 
     <table>
+        <caption>Displaying {{$rows}} rows</caption>
         <thead>
         <tr>
             <th>Row</th>

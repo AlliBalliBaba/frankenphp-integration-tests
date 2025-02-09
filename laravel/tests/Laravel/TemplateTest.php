@@ -17,15 +17,22 @@ class TemplateTest extends FeatureTestCase
         $this->fetchParallelTimes(new TestRequest("/table?rows=5"), 100, function (TestResponse $response) {
             $response->assertOk();
             $response->assertBodyContains('<table>');
+            $response->assertBodyContains("Displaying 5 rows");
         });
     }
 
     #[Test]
     public function render_big_table()
     {
-        $this->fetchParallelTimes(new TestRequest("/table?rows=500"), 100, function (TestResponse $response) {
+        $requests = [];
+        for ($i = 0; $i < 100; $i++) {
+            $requests[] = new TestRequest("/table?rows=$i");
+        }
+
+        $this->fetchParallel($requests, function (TestResponse $response) {
             $response->assertOk();
             $response->assertBodyContains('<table>');
+            $response->assertBodyContains("Displaying $response->index rows");
         });
     }
 

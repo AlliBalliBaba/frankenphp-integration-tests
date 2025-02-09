@@ -7,7 +7,7 @@ RUN install-php-extensions @composer xhprof mysqli gmp xml apcu curl pcntl pdo_m
 RUN apt-get update && apt-get install -y git && apt-get install -y wrk
 WORKDIR /flame
 RUN git clone https://github.com/brendangregg/FlameGraph.git
-RUN mkdir /profile && chmod 777 /profile && chmod -R www-data:www-data /flame
+RUN mkdir /profile && chmod 777 /profile && chown -R www-data:www-data /flame
 
 # adjust permissions
 WORKDIR /app
