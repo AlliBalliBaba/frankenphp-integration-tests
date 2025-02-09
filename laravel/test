@@ -3,5 +3,5 @@
 # start FrankenPHP
 frankenphp start -c /app/Caddyfile
 
-# run the tests (5 Processes)
-vendor/bin/paratest -p 5 -v
+# run the tests (8 Processes)
+vendor/bin/paratest -p 8 -v
