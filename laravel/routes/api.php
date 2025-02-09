@@ -14,6 +14,7 @@ use App\Http\Controllers\Extensions\Pdo;
 use App\Http\Controllers\Extensions\Redis;
 use App\Http\Controllers\Extensions\Xml;
 use App\Http\Controllers\Extensions\Zip;
+use App\Http\Controllers\Laravel\Context;
 use App\Http\Controllers\Laravel\Encrypt;
 use App\Http\Controllers\Laravel\FileCache;
 use App\Http\Controllers\Laravel\Hash;
@@ -46,6 +47,8 @@ Route::post('/filecache/flush', [FileCache::class, 'flush']);
 
 Route::post('/upload', [Upload::class, 'upload']);
 Route::post('/upload/flush', [Upload::class, 'flush']);
+
+Route::get('/context', [Context::class, 'context']);
 
 
 # Extensions

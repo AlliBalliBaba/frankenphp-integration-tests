@@ -1,0 +1,3 @@
+docker compose stop frankenphp
+docker compose up -d
+docker compose exec frankenphp sh flamegraph

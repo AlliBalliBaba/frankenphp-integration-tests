@@ -1,0 +1,14 @@
+# !/bin/bash
+
+rm -r /profile/*
+
+PROFILING=on frankenphp start -c Caddyfile
+
+sleep 1
+
+wrk -t1 -c 20 -d 40 http://localhost:80
+
+cd /flame/FlameGraph
+php /app/xhprof.php /profile > /app/xhprof.profile
+./flamegraph.pl /app/xhprof.profile > /app/flame.svg
+

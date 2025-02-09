@@ -2,12 +2,12 @@
 	# worker mode Caddyfile
 
 	frankenphp {
-		max_threads 10
-		num_threads 3
+		max_threads 40
+		num_threads 40
 		worker {
 			file "/app/public/frankenphp-worker.php"
-			num 1
-			watch
+			num 19
+			# watch
 		}
 
 		worker {
