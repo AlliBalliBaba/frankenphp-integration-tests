@@ -56,7 +56,7 @@ docker compose exec frankenphp vendor/bin/paratest --filter=OpenSSL
 You can run quick benchmarks and create flamegraphs with:
 
 ```bash
-sh benchmark
+sh bench
 ```
 
 and
