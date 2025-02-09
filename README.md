@@ -50,3 +50,17 @@ You can also filter for single tests
 ```bash
 docker compose exec frankenphp vendor/bin/paratest --filter=OpenSSL
 ```
+
+## Benchmarks
+
+You can run quick benchmarks and create flamegraphs with:
+
+```bash
+sh benchmark
+```
+
+and
+
+```bash
+sh flame
+```
