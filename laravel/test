@@ -4,4 +4,4 @@
 frankenphp start -c /app/Caddyfile
 
 # run the tests (8 Processes)
-vendor/bin/paratest -p 8 -v
+vendor/bin/paratest  -v

@@ -23,10 +23,10 @@ class TestResponse
      */
     public function assertOk(): void
     {
-        $this->assertStatusCode(200);
+        $this->assertStatus(200);
     }
 
-    public function assertStatusCode(int $expected): void
+    public function assertStatus(int $expected): void
     {
         $statusCode = $this->response->getStatusCode();
         if ($statusCode === 500 && $expected !== 500) {
@@ -37,9 +37,19 @@ class TestResponse
         $this->testCase->assertSame($expected, $this->response->getStatusCode());
     }
 
+    public function assertEitherStatus(...$expected): void
+    {
+        $statusCode = $this->response->getStatusCode();
+        if ($statusCode === 500 && !in_array(500, $expected)) {
+            $message = (string)$this->response->getBody();
+            $this->testCase->fail("Expected status code ".join(',',$expected)." but got 500:\n\n$message");
+        }
+        $this->testCase->assertContains($statusCode, $expected);
+    }
+
     public function assertJson(array $expected): void
     {
-        $this->testCase->assertEqualsCanonicalizing(
+        $this->testCase->assertSame(
             $expected,
             json_decode((string)$this->response->getBody(), true)
         );

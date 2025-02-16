@@ -28,7 +28,7 @@ class HashTest extends FeatureTestCase
         $this->fetchParallel($requests, function (TestResponse $response) use ($hashes) {
             $response->assertOk();
             $expectedValue = $hashes[$response->index];
-            $response->assertJson(['value' => $expectedValue]);
+            $response->assertJson(['hash' => $expectedValue]);
         });
     }
 

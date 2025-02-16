@@ -2,22 +2,23 @@
 	# worker mode Caddyfile
 
 	frankenphp {
-		max_threads 40
-		num_threads 40
+		max_threads 44
+		num_threads 41
 		worker {
 			file "/app/public/frankenphp-worker.php"
-			num 19
+			num 14
 			# watch
 		}
 
 		worker {
 			file "/symfony/public/index.php"
-			num 1
+			num 14
 		}
 
 		php_ini mysqlnd.collect_statistics Off
 		php_ini opcache.jit tracing
 		php_ini tideways.collect tracing
+		#php_ini max_input_time 2
 		#php_ini soap.wsdl_cache	1
 	}
 }

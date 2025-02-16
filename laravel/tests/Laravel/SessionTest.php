@@ -69,7 +69,7 @@ class SessionTest extends FeatureTestCase
 
         $this->fetchParallel($requests, function (TestResponse $response) {
             $response->assertOk();
-            $response->assertJson(['value' => $response->index]);
+            $response->assertJson(['value' => "$response->index"]);
         });
     }
 

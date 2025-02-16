@@ -15,7 +15,7 @@ class TimeoutTest extends FeatureTestCase
     public function test_timeouts()
     {
         $this->fetchParallelTimes(new TestRequest("/timeout"), 20, function (TestResponse $response) {
-            $response->assertStatusCode(500);
+            $response->assertStatus(500);
         });
     }
 

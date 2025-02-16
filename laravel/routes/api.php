@@ -98,3 +98,4 @@ Route::get('/bcrypt', [OpenSSL::class, 'bcrypt']);
 Route::post('/pdo/{driver}', [Pdo::class, 'insert']);
 Route::post('/pdo/{driver}/flush', [Pdo::class, 'flush']);
 Route::get('/pdo/{driver}/transaction', [Pdo::class, 'transaction']);
+Route::get('/pdo/{driver}/hang', [Pdo::class, 'postgresHang']);

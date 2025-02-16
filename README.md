@@ -64,3 +64,5 @@ and
 ```bash
 sh flame
 ```
+
+this will create a `laravel/flame.svg` for the Laravel 'Hello World'

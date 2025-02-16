@@ -17,7 +17,7 @@ class ThrowTest extends FeatureTestCase
         $request = new TestRequest('/throw');
 
         $this->fetchParallelTimes($request, 100, function (TestResponse $response) {
-            $response->assertStatusCode(500);
+            $response->assertStatus(500);
         });
     }
 
@@ -27,7 +27,7 @@ class ThrowTest extends FeatureTestCase
         $request = new TestRequest('/dd');
 
         $this->fetchParallelTimes($request, 100, function (TestResponse $response) {
-            $response->assertStatusCode(500);
+            $response->assertStatus(500);
         });
     }
 
@@ -42,7 +42,7 @@ class ThrowTest extends FeatureTestCase
 
         $this->fetchParallel($requests, function (TestResponse $response) {
             $expectedCode = (int)$response->getQuery('code');
-            $response->assertStatusCode($expectedCode);
+            $response->assertStatus($expectedCode);
         });
     }
 

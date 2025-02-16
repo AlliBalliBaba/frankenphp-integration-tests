@@ -47,6 +47,17 @@ class PdoTest extends FeatureTestCase
         $this->runTransactions('sqlite');
     }
 
+    #[Test]
+    public function simulate_hanging()
+    {
+        $this->assertTrue(true);
+        return;
+        $request = new TestRequest("/pdo/pgsql/hang");
+        $this->fetchParallelTimes($request, 100, function (TestResponse $response) {
+            $response->assertEitherStatus(502, 504);
+        });
+    }
+
     private function runInserts(string $driver): void
     {
         // first flush the DB

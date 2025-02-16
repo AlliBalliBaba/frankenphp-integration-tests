@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use function Laravel\Prompts\select;
 
 class Pdo
 {
@@ -53,6 +54,18 @@ class Pdo
         return [
             'success' => $existsInTransaction && $doesNotExistAfterRollback
         ];
+    }
+
+    public function postgresHang(Request $request): array
+    {
+        config()->set('database.default', $this->getDriver($request));
+
+        #sleep(2);
+        DB::select('SELECT SLEEP(5);');
+        DB::select('SELECT pg_sleep(60)');
+        #DB::select('SELECT SLEEP(5);');
+
+        return ['success' => true];
     }
 
     private function getDriver(Request $request): string

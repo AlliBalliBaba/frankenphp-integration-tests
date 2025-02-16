@@ -2,7 +2,6 @@
 
 namespace Tests\Extensions;
 
-use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\FeatureTestCase;
 use Tests\TestRequest;

@@ -28,7 +28,7 @@ class MysqliTest extends FeatureTestCase
     {
         $this->fetchParallelTimes(new TestRequest("/mysqli/denied"), 5,
             function (TestResponse $response) {
-                $response->assertStatusCode(500);
+                $response->assertStatus(500);
             }
         );
     }

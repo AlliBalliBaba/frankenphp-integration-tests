@@ -39,7 +39,7 @@ class EncryptTest extends FeatureTestCase
         $this->fetchParallel($requests, function (TestResponse $response) use ($values) {
             $response->assertOk();
             $expectedValue = $values[$response->index];
-            $response->assertJson(['value' => $expectedValue]);
+            $response->assertJson(['decrypted' => $expectedValue]);
         });
     }
 

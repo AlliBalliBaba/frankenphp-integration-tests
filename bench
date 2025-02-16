@@ -1,8 +1,15 @@
 #!/bin/bash
+docker compose stop frankenphp
 docker compose up -d
 
 docker compose exec frankenphp frankenphp start -c /app/Caddyfile
 
 sleep 1
 
-docker compose exec frankenphp wrk -t4 -c50 http://localhost:80/
+# bench Laravel
+docker compose exec frankenphp wrk -t4 -c70 -d 10 http://localhost:80/
+
+sleep 3
+
+# bench Symfony
+#docker compose exec frankenphp wrk -t4 -c70 -d 60 http://localhost:8000/lucky/number/1
