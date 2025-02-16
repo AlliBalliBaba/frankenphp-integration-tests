@@ -16,6 +16,9 @@ rm -rf frankenphp
 # clone the FrankenPHP branch to install from
 git clone -b "$branch" https://github.com/dunglas/frankenphp.git
 
+# or copy a local fork
+#cp -r ../fork/frankenphp frankenphp
+
 cd frankenphp && docker build -t frankenphp-custom --build-context "php-base=docker-image://$phpimage" --build-context "golang-base=docker-image://$goimage" .
 cd ..
 
