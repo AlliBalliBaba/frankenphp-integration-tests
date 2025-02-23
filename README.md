@@ -1,4 +1,4 @@
-# FrankenPHP Integration Tests
+# FrankenPHP Fuzzing/Integration Tests
 
 This repo only exists for testing FrankenPHP with various extensions/frameworks before major releases.
 
