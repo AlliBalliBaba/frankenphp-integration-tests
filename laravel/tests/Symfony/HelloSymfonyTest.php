@@ -19,4 +19,15 @@ class HelloSymfonyTest extends FeatureTestCase
         });
     }
 
+    #[Test]
+    public function test_symfony_dot_env()
+    {
+        $testRequest = new SymfonyRequest('/env');
+        $this->fetchParallelTimes($testRequest, 100, function (TestResponse $response) {
+            $response->assertOk();
+            $response->assertBodyContains('CUSTOM_ENV');
+            $response->assertBodyContains('custom_env_value');
+        });
+    }
+
 }

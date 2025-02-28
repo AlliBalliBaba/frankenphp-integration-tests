@@ -16,6 +16,7 @@ services:
       - mysql
       - redis
     environment:
+      - "CUSTOM_OS_ENV=custom_os_env_value"
       - "APP_RUNTIME=Runtime\\FrankenPhpSymfony\\Runtime"
     entrypoint: ['tail', '-f', '/dev/null']
   mysql:

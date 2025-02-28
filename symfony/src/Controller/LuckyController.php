@@ -16,4 +16,12 @@ class LuckyController
             '<html><body>Lucky number: ' . $number . '</body></html>'
         );
     }
+
+    #[Route('/env', name: 'env')]
+    public function env(): Response
+    {
+        return new Response(
+            json_encode($_ENV, JSON_PRETTY_PRINT)
+        );
+    }
 }

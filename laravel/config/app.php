@@ -15,6 +15,9 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'custom_env' => env('CUSTOM_LARAVEL_ENV', 'custom_laravel_env_value'),
+    'custom_os_env' => env('CUSTOM_OS_ENV', 'custom_os_env_value'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
