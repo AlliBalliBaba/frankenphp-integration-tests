@@ -26,6 +26,8 @@ cd ..
 docker build -t frankenphp-custom-with-extensions -f frankenphp.Dockerfile .
 docker compose up -d
 docker compose exec frankenphp composer update
+docker compose exec -w /symfony composer update
 docker compose exec frankenphp cp .env.example .env
+docker compose exec frankenphp touch database/database.sqlite
 docker compose exec frankenphp php artisan key:generate
 docker compose exec frankenphp php artisan octane:install --server=frankenphp
